@@ -3,11 +3,12 @@ package TreeModel;
 import java.util.ArrayList;
 
 public class MinimalSpanningTree {
-private EdgeList edges = new EdgeList();
+private EdgeList edges;
 private String MSTtime;
 	public MinimalSpanningTree(HubList list, int hubNumber) {
 		int iterAdress = hubNumber;
 		int tmpAdress;
+		edges = new EdgeList();
 		ArrayList<Integer> checkedHubAdresses = new ArrayList<Integer>(); // list of hubs reached by the network edges
 		ArrayList<Integer> adressesToCheck = new ArrayList<Integer>(); //list of hubs to check their neighbours
 		adressesToCheck.add(iterAdress);
@@ -42,6 +43,10 @@ private String MSTtime;
 	
 	public String getMSTTime(){
 		return MSTtime;
+	}
+	
+	public EdgeList getEdges(){
+		return edges;
 	}
 	
 	

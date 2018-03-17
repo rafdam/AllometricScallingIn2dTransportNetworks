@@ -19,7 +19,7 @@ public class TabbedPane extends JTabbedPane {
 		simulationTab = new JPanel();		
 		addTab("<html> <b>Visualization", simulationTab);	
 		chartAndCountTab = new JPanel();
-		addTab("<html> <b>Allometric index", chartAndCountTab);
+		addTab("<html> <b>Raw Data & Chart", chartAndCountTab);
 		
 		
 		

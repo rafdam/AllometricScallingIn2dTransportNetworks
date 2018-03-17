@@ -13,7 +13,7 @@ import javax.swing.border.LineBorder;
 import TreeModel.IndexCalculus;
 import net.miginfocom.swing.MigLayout;
 
-public class ConsoleVisPanel extends JPanel {
+public class ConsoleVisPanel extends JPanel{
 	/**
 	 * 
 	 */
@@ -52,6 +52,7 @@ public class ConsoleVisPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try{
 					index = new IndexCalculus(startL, probability, neighbours, jumpSiz, jumpNumber, 5);
+					index.start();
 				}
 				catch(NullPointerException nullE){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Define all the start Values before you run the simulation");
@@ -65,6 +66,12 @@ public class ConsoleVisPanel extends JPanel {
 				BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().clear();
 				BasicFrame.getPane().getCountTab().getChart().clearChart();
 				BasicFrame.getPane().getCountTab().getResults().getIndexPanel().getLabel().setText("AllometricScaleIndex");
+				stL.setText("<html> <b>Start L size: ");
+				jumpNumb.setText("<html> <b>Number of jumps:");
+				jumpSize.setText("<html> <b>Size of jump:");
+				prob.setText("<html> <b>Density of network:");
+				neighb.setText("<html> <b>Number of neighbours:");
+				
 			}
 		};
 		
@@ -142,4 +149,5 @@ public class ConsoleVisPanel extends JPanel {
 	public void setNeighbours(int neighbours) {
 		this.neighbours = neighbours;
 	}
+	
 }

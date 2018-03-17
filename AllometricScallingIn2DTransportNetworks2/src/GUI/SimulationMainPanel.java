@@ -25,7 +25,7 @@ public class SimulationMainPanel extends JPanel {
 		setBorder(new LineBorder(Color.BLACK, 2));	
 		visu = new VisualizationMainPanel();
 		console = new ConsoleVisPanel();
-		add(visu, "width 100%, height 90%, wrap");
+		add(visu, "width 80%, height 90%, wrap");
 		add(console, "width 100%, height 10%");
 	}
 	

@@ -6,18 +6,28 @@ import java.util.ArrayList;
 import GUI.BasicFrame;
 import GUI.ChartPointsTable;
 
-public class IndexCalculus {
+public class IndexCalculus extends Thread{
+	private Thread t;
 	private ArrayList<Double> logLVals;
 	private ArrayList<Double> logCVals;
 	private ArrayList<Integer> LVals;
 	private ArrayList<Integer> CVals;
 	private double aIndex;
 	private double bIndex;
+	private int startLVal, kNeighbours, jumpVal, jumps, pieceOne;
+	private double probability;
 	public IndexCalculus(int startL, double prob, int neighbours, int jump, int jumpCount, int piece){
+		startLVal = startL;
+		kNeighbours = neighbours;
+		jumpVal = jump;
+		jumps = jumpCount;
+		pieceOne = piece;
+		probability = prob;
 		logLVals = new ArrayList<Double>();
 		logCVals = new ArrayList<Double>();
 		LVals = new ArrayList<Integer>();
 		CVals = new ArrayList<Integer>();
+		/*
 		int endL = startL + (jump * jumpCount);
 		for (int ii = startL; ii < endL ; ii = ii+jump){
 			TreeMap tmpTreeMap = new TreeMap(ii, prob, neighbours);
@@ -39,7 +49,37 @@ public class IndexCalculus {
 				BasicFrame.getPane().getCountTab().getChart().refreshLinePlot(logLVals, aIndex, bIndex);
 			}
 		}
+		*/
 		
+	}
+	
+	public void run(){
+		int endL = startLVal + (jumpVal * jumps);
+		for (int ii = startLVal; ii < endL ; ii = ii+jumpVal){
+			TreeMap tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
+			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), (int)(ii * ii  * 0.7 / (pieceOne + 1)));
+			logLVals.add(2 * Math.log10(ii));
+			logCVals.add((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
+			LVals.add(ii);
+			CVals.add(tmpSpanTree.MinimalRequiredAmount());
+			DecimalFormat df = new DecimalFormat(".##");
+			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable();
+			//ChartPointsTable.addRow(ii, df.format(2* Math.log10(ii)), tmpSpanTree.MinimalRequiredAmount(), df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
+			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(ii, df.format(2* Math.log10(ii)), 
+					tmpSpanTree.MinimalRequiredAmount(), 
+					df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
+					tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
+			BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2*Math.log10(ii), Math.log10(tmpSpanTree.MinimalRequiredAmount()));
+			if (ii > 2){
+				calc();
+				BasicFrame.getPane().getCountTab().getChart().refreshLinePlot(logLVals, aIndex, bIndex);
+			}
+		}
+	}
+	
+	public void start(){
+		t = new Thread(this);
+		t.start();
 	}
 	
 	public ArrayList<Double> getLogLVals(){
