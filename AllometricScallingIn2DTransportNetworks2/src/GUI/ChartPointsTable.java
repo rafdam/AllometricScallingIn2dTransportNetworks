@@ -5,7 +5,6 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class ChartPointsTable extends JTable {
-
 	/**
 	 * 
 	 */
@@ -20,7 +19,6 @@ public class ChartPointsTable extends JTable {
 	    setModel(model);						//Setting default model of table
 	    setDefaultEditor(Object.class, null);
 	}
-	
 	public void addRow(int a, String b, int c, String d, String MNTt, String MSTt){
 		model.addRow(new Object[]{a,b,c,d, MNTt, MSTt});
 	}

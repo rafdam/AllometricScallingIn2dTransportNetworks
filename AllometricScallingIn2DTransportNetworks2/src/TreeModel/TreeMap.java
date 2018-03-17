@@ -75,6 +75,7 @@ private String MNtime;
 												map.get(listIndex).addToNeighbourIndexesList(cube[tmpXCoord+ii][tmpYCoord+jj] - 1);
 												map.get(cube[tmpXCoord+ii][tmpYCoord+jj] - 1).addToNeighbourIndexesList(listIndex);
 												tmpNeighboursCount = tmpNeighboursCount + 1;
+												edges.add(new Edge(listIndex,cube[tmpXCoord+ii][tmpYCoord+jj], 1));
 											}
 											catch(NullPointerException yyy){
 												//Shouldn't even be possible BUT just in case 
@@ -114,7 +115,7 @@ private String MNtime;
 		return size;
 	}
 	
-	public EdgeList getList(){
+	public EdgeList getEdges(){
 		return edges;
 	}
 }

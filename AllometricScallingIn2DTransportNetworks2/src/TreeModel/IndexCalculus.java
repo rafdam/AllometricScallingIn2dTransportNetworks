@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import GUI.BasicFrame;
-import GUI.ChartPointsTable;
 
 public class IndexCalculus extends Thread{
 	private Thread t;
@@ -64,7 +63,6 @@ public class IndexCalculus extends Thread{
 			CVals.add(tmpSpanTree.MinimalRequiredAmount());
 			DecimalFormat df = new DecimalFormat(".##");
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable();
-			//ChartPointsTable.addRow(ii, df.format(2* Math.log10(ii)), tmpSpanTree.MinimalRequiredAmount(), df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(ii, df.format(2* Math.log10(ii)), 
 					tmpSpanTree.MinimalRequiredAmount(), 
 					df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
@@ -74,6 +72,13 @@ public class IndexCalculus extends Thread{
 				calc();
 				BasicFrame.getPane().getCountTab().getChart().refreshLinePlot(logLVals, aIndex, bIndex);
 			}
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addHistData(new HistoricalCalcs(
+																							tmpTreeMap.getNetwork(),
+																							tmpTreeMap.getEdges(),
+																							tmpSpanTree.getEdges()));
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addRow(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getDataBase().size(),
+																						tmpTreeMap.getSize(),
+																						tmpTreeMap.getNetwork().size());
 		}
 	}
 	

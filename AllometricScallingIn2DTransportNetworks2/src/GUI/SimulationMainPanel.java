@@ -1,12 +1,12 @@
 package GUI;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.util.TreeMap;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import TreeModel.SimulationRawDataPanel;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -18,15 +18,20 @@ public class SimulationMainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	VisualizationMainPanel visu;
 	ConsoleVisPanel console;
+	SimulationRawDataPanel rawData;
 	public SimulationMainPanel() {
-		setLayout(new MigLayout());
+		setLayout(new MigLayout("", "[] []","[]"));
 		Color color = new Color(235,235,252);
 		setBackground(color);
 		setBorder(new LineBorder(Color.BLACK, 2));	
 		visu = new VisualizationMainPanel();
 		console = new ConsoleVisPanel();
-		add(visu, "width 80%, height 90%, wrap");
-		add(console, "width 100%, height 10%");
+		rawData = new SimulationRawDataPanel();
+		JLabel author = new JLabel("Authors:");
+		add(visu, "width 80%, height 90%");
+		add(rawData, "width 20%, height 90%, span");
+		add(console, "width 80%, height 10%");
+		add(author);
 	}
 	
 	public VisualizationMainPanel getVisPanel(){
@@ -35,5 +40,9 @@ public class SimulationMainPanel extends JPanel {
 	
 	public ConsoleVisPanel getConsolePanel(){
 		return console;
+	}
+	
+	public SimulationRawDataPanel getRawDataPanel(){
+		return rawData;
 	}
 }
