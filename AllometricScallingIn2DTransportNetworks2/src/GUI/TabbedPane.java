@@ -16,10 +16,11 @@ public class TabbedPane extends JTabbedPane {
 	ScallingMainPanel calculusPanel;
 	
 	public TabbedPane() {
-		chartAndCountTab = new JPanel();
-		addTab("<html> <b>Allometric index", chartAndCountTab);
 		simulationTab = new JPanel();		
 		addTab("<html> <b>Visualization", simulationTab);	
+		chartAndCountTab = new JPanel();
+		addTab("<html> <b>Allometric index", chartAndCountTab);
+		
 		
 		
 		simulationPanel = new SimulationMainPanel();
@@ -33,5 +34,9 @@ public class TabbedPane extends JTabbedPane {
 	
 	public ScallingMainPanel getCountTab(){
 		return calculusPanel;
+	}
+	
+	public SimulationMainPanel getSimTab(){
+		return simulationPanel;
 	}
 }

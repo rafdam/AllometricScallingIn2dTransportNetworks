@@ -9,11 +9,10 @@ private String MNtime;
 	public TreeMap(int siz, double prob, int neighbours) {
 		int tmpXCoord;
 		int tmpYCoord;
-		int tmpZCoord;
 		int loopCounter;
 		int tmpNeighboursCount = 0;
-		int maxVal = (siz * siz * siz) + 1;
-		int[][][] cube = new int[siz][siz][siz];
+		int maxVal = (siz * siz) + 1;
+		int[][] cube = new int[siz][siz];
 		
 		size = siz;
 		hubbingProbability = prob;
@@ -22,23 +21,22 @@ private String MNtime;
 		long start = System.currentTimeMillis();
 		for (int ii = 0; ii < siz; ii++){
 			for (int jj = 0; jj < siz; jj++){
-				for (int zz = 0; zz < siz; zz++){
-					if (Math.random() <= prob){
-						map.add(new NetworkHub((short)ii, (short)jj, (short)zz));
-						try{
-							cube[ii][jj][zz] = (int) (map.getSize());
-							//System.out.println(ii + " " + jj + " " + zz);
-						}
-						catch(NullPointerException ee){
-							cube[ii][jj][zz] = maxVal;
-							System.out.print("dickinson");
-							//Giving 1st value that would never be reached, guarantee this point wouldn't be treated as a hub
-						}
+				if (Math.random() <= prob){
+					map.add(new NetworkHub((short)ii, (short)jj));
+					try{
+						cube[ii][jj] = (int) (map.getSize());
+						//System.out.println(ii + " " + jj + " " + zz);
 					}
-					else{
-						cube[ii][jj][zz] = maxVal;
+					catch(NullPointerException ee){
+						cube[ii][jj] = maxVal;
+						System.out.print("dickinson");
+						//Giving 1st value that would never be reached, guarantee this point wouldn't be treated as a hub
 					}
 				}
+				else{
+					cube[ii][jj] = maxVal;
+				}
+				
 			}
 		}
 		
@@ -53,7 +51,6 @@ private String MNtime;
 			}
 			tmpXCoord = map.get(listIndex).getxCartCoord();
 			tmpYCoord = map.get(listIndex).getyCartCoord();
-			tmpZCoord = map.get(listIndex).getzCartCoord();
 			//Looping over loopCounter lvl ring around given Hub
 			while (tmpNeighboursCount < (int)(neighbours)){
 				for (int ii = -loopCounter; ii <= loopCounter; ii ++){
@@ -64,22 +61,19 @@ private String MNtime;
 						if (tmpNeighboursCount == neighbours){
 							break;
 						}
-						for (int zz = -loopCounter; zz <= loopCounter; zz++){
-							if (tmpNeighboursCount == neighbours){
-								break;
-							}
+						
+							
 							try{
 								if(ii == -loopCounter || ii == loopCounter //condition that guarantee that no point that has been checked before gonna be checked again
-								|| jj == -loopCounter || jj == loopCounter  
-								|| zz == -loopCounter || zz == loopCounter){
-									if(cube[tmpXCoord+ii][tmpYCoord+jj][tmpZCoord+zz] != maxVal){
-										if (map.get(cube[tmpXCoord+ii][tmpYCoord+jj][tmpZCoord+zz] - 1).getNeighbourIndexesList().size() >= (int) neighbours){
+								|| jj == -loopCounter || jj == loopCounter){
+									if(cube[tmpXCoord+ii][tmpYCoord+jj] != maxVal){
+										if (map.get(cube[tmpXCoord+ii][tmpYCoord+jj] - 1).getNeighbourIndexesList().size() >= (int) neighbours){
 											//next minicube
 										}
 										else{
 											try{	
-												map.get(listIndex).addToNeighbourIndexesList(cube[tmpXCoord+ii][tmpYCoord+jj][tmpZCoord+zz] - 1);
-												map.get(cube[tmpXCoord+ii][tmpYCoord+jj][tmpZCoord+zz] - 1).addToNeighbourIndexesList(listIndex);
+												map.get(listIndex).addToNeighbourIndexesList(cube[tmpXCoord+ii][tmpYCoord+jj] - 1);
+												map.get(cube[tmpXCoord+ii][tmpYCoord+jj] - 1).addToNeighbourIndexesList(listIndex);
 												tmpNeighboursCount = tmpNeighboursCount + 1;
 											}
 											catch(NullPointerException yyy){
@@ -96,7 +90,7 @@ private String MNtime;
 							catch(ArrayIndexOutOfBoundsException zzz){
 								//in case the algorithm would like to check -1 index in the cube
 							}
-						}
+						
 					}
 				}
 			loopCounter = loopCounter + 1;
@@ -111,7 +105,6 @@ private String MNtime;
 	public String getMNTime(){
 		return MNtime;
 	}
-	
 	
 	public HubList getNetwork(){
 		return map;

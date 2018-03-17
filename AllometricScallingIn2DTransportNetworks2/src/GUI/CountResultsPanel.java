@@ -27,4 +27,8 @@ public class CountResultsPanel extends JPanel {
 	public AllometricIndexPanel getIndexPanel(){
 		return indexPanel;
 	}
+	
+	public ChartPointsPanel getChartTable(){
+		return chartPoints;
+	}
 }

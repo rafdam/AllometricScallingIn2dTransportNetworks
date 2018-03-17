@@ -1,18 +1,20 @@
 package TreeModel;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class NetworkHub {
 private short xCartCoord; // coordinates defined in cartesian metric system
 private short yCartCoord;
-private short zCartCoord;
+//private short zCartCoord;
 private int level; // defines the level of the hub specified by spanning tree
 private ArrayList<Integer> neighbourIndexesList;
 	
-	public NetworkHub(short x, short y, short z) {
+	public NetworkHub(short x, short y) {
 		xCartCoord = x;
 		yCartCoord = y;
-		zCartCoord = z;
+		//zCartCoord = z;
 		level = 0;
 		new ArrayList<NetworkHub>();
 		neighbourIndexesList = new ArrayList<Integer>();
@@ -34,13 +36,6 @@ private ArrayList<Integer> neighbourIndexesList;
 		this.yCartCoord = yCartCoord;
 	}
 
-	public short getzCartCoord() {
-		return zCartCoord;
-	}
-
-	public void setzCartCoord(short zCartCoord) {
-		this.zCartCoord = zCartCoord;
-	}
 	public void setLevel(int weight){
 		level = weight;
 	}
@@ -53,5 +48,10 @@ private ArrayList<Integer> neighbourIndexesList;
 	
 	public ArrayList<Integer> getNeighbourIndexesList(){
 		return neighbourIndexesList;
+	}
+	
+	public void draw(Graphics g) { // drawing a stationary charge as a pink oval (moved x/y oval coords are centering the oval to the right place)
+		g.setColor(Color.RED);
+		g.fillOval((int)(xCartCoord-5), (int)(yCartCoord-5), 10, 10);
 	}
 }

@@ -48,7 +48,7 @@ public class CountChartPanel extends JPanel {
 	   	xyDataset = xySeriesCollection;
 	   	scatterPlot = ChartFactory.createScatterPlot
 	        ("Allometric Scalling In distribution Networks",  // Title
-	          "3*Log(L)",           // X-Axis label
+	          "2Log(L)",           // X-Axis label
 	          "Log(C)",           // Y-Axis label
 	          xyDataset,          // Dataset
 	          PlotOrientation.VERTICAL,        //Plot orientation
@@ -84,6 +84,11 @@ public class CountChartPanel extends JPanel {
 		//xyDataset = xySeriesCollection;
 		scatterPlot.getXYPlot().setDataset(xyDataset);
 		scatterPlot.getXYPlot().getRangeAxis().setAutoRange(true);
+	}
+	
+	public void clearChart(){
+		dataSet.clear();
+		linePlot.clear();
 	}
 	
 	public void refreshLinePlot(ArrayList<Double> list, double a, double b){

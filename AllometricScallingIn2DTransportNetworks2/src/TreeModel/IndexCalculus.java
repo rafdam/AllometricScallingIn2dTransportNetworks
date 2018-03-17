@@ -3,7 +3,6 @@ package TreeModel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import GUI.AllometricIndexPanel;
 import GUI.BasicFrame;
 import GUI.ChartPointsTable;
 
@@ -14,29 +13,30 @@ public class IndexCalculus {
 	private ArrayList<Integer> CVals;
 	private double aIndex;
 	private double bIndex;
-	public IndexCalculus(int startL, int jump, int jumpCount, int piece){
+	public IndexCalculus(int startL, double prob, int neighbours, int jump, int jumpCount, int piece){
 		logLVals = new ArrayList<Double>();
 		logCVals = new ArrayList<Double>();
 		LVals = new ArrayList<Integer>();
 		CVals = new ArrayList<Integer>();
 		int endL = startL + (jump * jumpCount);
 		for (int ii = startL; ii < endL ; ii = ii+jump){
-			TreeMap tmpTreeMap = new TreeMap(ii, 0.7, 15);
-			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), (int)(ii * ii * ii * 0.7 / (piece + 1)));
-			logLVals.add(3 * Math.log10(ii));
+			TreeMap tmpTreeMap = new TreeMap(ii, prob, neighbours);
+			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), (int)(ii * ii  * 0.7 / (piece + 1)));
+			logLVals.add(2 * Math.log10(ii));
 			logCVals.add((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
 			LVals.add(ii);
 			CVals.add(tmpSpanTree.MinimalRequiredAmount());
 			DecimalFormat df = new DecimalFormat(".##");
-			ChartPointsTable.addRow(ii, df.format(3* Math.log10(ii)), tmpSpanTree.MinimalRequiredAmount(), df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
-			//System.out.println("L = " + ii);
-			//System.out.println("C = " + tmpSpanTree.MinimalRequiredAmount());
-			BasicFrame.getPane().getCountTab().getChart().addPointsToChart(3*Math.log10(ii), Math.log10(tmpSpanTree.MinimalRequiredAmount()));
+			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable();
+			//ChartPointsTable.addRow(ii, df.format(2* Math.log10(ii)), tmpSpanTree.MinimalRequiredAmount(), df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
+			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(ii, df.format(2* Math.log10(ii)), 
+					tmpSpanTree.MinimalRequiredAmount(), 
+					df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
+					tmpTreeMap.getMNTime(), tmpSpanTree.getMSTTime());
+			BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2*Math.log10(ii), Math.log10(tmpSpanTree.MinimalRequiredAmount()));
 			if (ii > 2){
 				calc();
-				//BasicFrame.getPane().getCountTab().getChart().getLinePlot().add(3 * Math.log10(ii), bIndex * 3 * Math.log10(ii));
 				BasicFrame.getPane().getCountTab().getChart().refreshLinePlot(logLVals, aIndex, bIndex);
-				//xyDataset = xySeriesCollection;
 			}
 		}
 		

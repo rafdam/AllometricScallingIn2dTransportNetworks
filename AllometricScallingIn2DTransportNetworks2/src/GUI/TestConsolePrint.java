@@ -21,7 +21,7 @@ public class TestConsolePrint {
 		}
 		BasicFrame frame = new BasicFrame();
 		frame.setVisible(true);
-		IndexCalculus index = new IndexCalculus(10,1,15,5);
+		//
 	}
 
 }
