@@ -1,12 +1,10 @@
 package GUI;
 
 import java.awt.Color;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import TreeModel.SimulationRawDataPanel;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -45,4 +43,6 @@ public class SimulationMainPanel extends JPanel {
 	public SimulationRawDataPanel getRawDataPanel(){
 		return rawData;
 	}
+	
+		
 }

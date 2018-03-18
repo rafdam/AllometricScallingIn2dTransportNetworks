@@ -15,18 +15,27 @@ private String MSTtime;
 		checkedHubAdresses.add(hubNumber);
 		long start = System.currentTimeMillis();
 		for (int ii = 0; ii < adressesToCheck.size(); ii++){
-			for (int jj = 0; jj < list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().size();jj++){
-				tmpAdress = list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().get(jj);
-				if(checkedHubAdresses.contains(tmpAdress)){
-					//do nothing, get another adress
+			try{
+				for (int jj = 0; jj < list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().size();jj++){
+					tmpAdress = list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().get(jj);
+					if(checkedHubAdresses.contains(tmpAdress)){
+						//do nothing, get another adress
+					}
+					else{
+						checkedHubAdresses.add(tmpAdress);
+						list.get(tmpAdress).setLevel(list.get(adressesToCheck.get(ii)).getLevel() + 1);
+						edges.add(new Edge(adressesToCheck.get(ii), tmpAdress, list.get(adressesToCheck.get(ii)).getLevel()+1,
+								list.get(adressesToCheck.get(ii)).getxCartCoord(), 
+								list.get(tmpAdress).getxCartCoord(), 
+								list.get(adressesToCheck.get(ii)).getyCartCoord(), 
+								list.get(tmpAdress).getyCartCoord()));
+						adressesToCheck.add(tmpAdress);
+						//System.out.println(tmpAdress);
+					}
 				}
-				else{
-					checkedHubAdresses.add(tmpAdress);
-					list.get(tmpAdress).setLevel(list.get(adressesToCheck.get(ii)).getLevel() + 1);
-					edges.add(new Edge(adressesToCheck.get(ii), tmpAdress, list.get(adressesToCheck.get(ii)).getLevel()+1));
-					adressesToCheck.add(tmpAdress);
-					//System.out.println(tmpAdress);
-				}
+			}
+			catch(IndexOutOfBoundsException ee){
+				System.out.println("Koniec");
 			}
 			//System.out.println("-------------------------------");
 		}

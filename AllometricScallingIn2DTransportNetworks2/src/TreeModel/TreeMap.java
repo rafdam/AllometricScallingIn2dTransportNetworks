@@ -75,7 +75,11 @@ private String MNtime;
 												map.get(listIndex).addToNeighbourIndexesList(cube[tmpXCoord+ii][tmpYCoord+jj] - 1);
 												map.get(cube[tmpXCoord+ii][tmpYCoord+jj] - 1).addToNeighbourIndexesList(listIndex);
 												tmpNeighboursCount = tmpNeighboursCount + 1;
-												edges.add(new Edge(listIndex,cube[tmpXCoord+ii][tmpYCoord+jj], 1));
+												edges.add(new Edge(listIndex,cube[tmpXCoord+ii][tmpYCoord+jj], 0,
+														tmpXCoord,
+														map.get(cube[tmpXCoord+ii][tmpYCoord+jj]-1).getxCartCoord(),
+														tmpYCoord,
+														map.get(cube[tmpXCoord+ii][tmpYCoord+jj]-1).getyCartCoord()));
 											}
 											catch(NullPointerException yyy){
 												//Shouldn't even be possible BUT just in case 

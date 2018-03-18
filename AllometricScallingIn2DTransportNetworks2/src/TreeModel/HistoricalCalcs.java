@@ -12,6 +12,10 @@ public class HistoricalCalcs {
 		minimalSpanningEdgeList = minimalTree;
 	}
 	
+	public HistoricalCalcs(){
+		
+	}
+	
 	public HubList getVerticleList(){
 		return verticleList;
 	}
@@ -22,6 +26,12 @@ public class HistoricalCalcs {
 	
 	public EdgeList getMinimalSpanningEdgeList(){
 		return minimalSpanningEdgeList;
+	}
+	
+	public void setParams(HubList list, EdgeList maximalNetwork, EdgeList minimalTree){
+		verticleList = list;
+		maximalNetworkEdgeList = maximalNetwork;
+		minimalSpanningEdgeList = minimalTree;
 	}
 
 }

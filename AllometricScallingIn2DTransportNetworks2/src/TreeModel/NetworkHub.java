@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import GUI.BasicFrame;
+
 public class NetworkHub {
 private short xCartCoord; // coordinates defined in cartesian metric system
 private short yCartCoord;
@@ -50,8 +52,8 @@ private ArrayList<Integer> neighbourIndexesList;
 		return neighbourIndexesList;
 	}
 	
-	public void draw(Graphics g) { // drawing a stationary charge as a pink oval (moved x/y oval coords are centering the oval to the right place)
-		g.setColor(Color.RED);
-		g.fillOval((int)(xCartCoord-5), (int)(yCartCoord-5), 10, 10);
+	public void draw(Graphics g, double x, double y) { // drawing a stationary charge as a pink oval (moved x/y oval coords are centering the oval to the right place)
+		g.setColor(Color.YELLOW);
+		g.fillOval((int)((xCartCoord) * x + 1), (int)((yCartCoord) * y + 1), 6, 6);
 	}
 }

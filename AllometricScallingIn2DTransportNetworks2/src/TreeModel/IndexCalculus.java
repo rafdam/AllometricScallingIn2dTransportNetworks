@@ -26,6 +26,7 @@ public class IndexCalculus extends Thread{
 		logCVals = new ArrayList<Double>();
 		LVals = new ArrayList<Integer>();
 		CVals = new ArrayList<Integer>();
+		
 		/*
 		int endL = startL + (jump * jumpCount);
 		for (int ii = startL; ii < endL ; ii = ii+jump){
@@ -47,8 +48,18 @@ public class IndexCalculus extends Thread{
 				calc();
 				BasicFrame.getPane().getCountTab().getChart().refreshLinePlot(logLVals, aIndex, bIndex);
 			}
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addHistData(new HistoricalCalcs(
+					tmpTreeMap.getNetwork(),
+					tmpTreeMap.getEdges(),
+					tmpSpanTree.getEdges()));
+			System.out.println("1stAdd");
+					BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addRow(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getDataBase().size(),
+					tmpTreeMap.getSize(),
+					tmpTreeMap.getNetwork().size());
+			System.out.println("2stAdd");
 		}
 		*/
+		
 		
 	}
 	
@@ -56,7 +67,8 @@ public class IndexCalculus extends Thread{
 		int endL = startLVal + (jumpVal * jumps);
 		for (int ii = startLVal; ii < endL ; ii = ii+jumpVal){
 			TreeMap tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
-			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), (int)(ii * ii  * 0.7 / (pieceOne + 1)));
+			pieceOne = (int)tmpTreeMap.getNetwork().size()/2;
+			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), pieceOne);
 			logLVals.add(2 * Math.log10(ii));
 			logCVals.add((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
 			LVals.add(ii);

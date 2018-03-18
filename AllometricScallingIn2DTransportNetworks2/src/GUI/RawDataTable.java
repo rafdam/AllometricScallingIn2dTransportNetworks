@@ -13,11 +13,13 @@ public class RawDataTable extends JTable {
 	/**
 	 * 
 	 */
+	HistoricalCalcs networkToDraw;
 	private static final long serialVersionUID = 1L;
 	DefaultTableModel model;
 	ArrayList<HistoricalCalcs> dataBase;
 	public RawDataTable() {
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		networkToDraw = new HistoricalCalcs();
 		dataBase = new ArrayList<HistoricalCalcs>();
 		Object[] columns = {"n.o.p.","L","N"};
 	    model = new DefaultTableModel(); 
@@ -34,6 +36,10 @@ public class RawDataTable extends JTable {
 	
 	public ArrayList<HistoricalCalcs> getDataBase(){
 		return dataBase;
+	}
+	
+	public HistoricalCalcs getNetworkToDraw(){
+		return networkToDraw;
 	}
 
 }

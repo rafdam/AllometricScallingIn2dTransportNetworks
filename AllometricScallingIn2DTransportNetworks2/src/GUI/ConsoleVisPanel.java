@@ -53,6 +53,7 @@ public class ConsoleVisPanel extends JPanel{
 				try{
 					index = new IndexCalculus(startL, probability, neighbours, jumpSiz, jumpNumber, 5);
 					index.start();
+					//index.stop();
 				}
 				catch(NullPointerException nullE){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Define all the start Values before you run the simulation");
