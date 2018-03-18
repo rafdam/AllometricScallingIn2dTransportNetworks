@@ -36,12 +36,13 @@ private int weight; //First the edge weight gonna be calculated just by euclidea
 		return weight;
 	}
 	
-	public void draw(Graphics g, double x, double y) { 
+	public void draw(Graphics g, double x, double y, int xOffset, int yOffset) { 
 		g.setColor(Color.GRAY);
-		g.drawLine((int)((hub1XCoord) * x + 4), (int)((hub1YCoord) * y + 4), (int)((hub2XCoord) * x + 4), (int)((hub2YCoord) * y + 4));
+		g.drawLine((int)((hub1XCoord) * x + 13 + xOffset), (int)((hub1YCoord) * y + 13 + yOffset),
+				(int)((hub2XCoord) * x + 13 + xOffset), (int)((hub2YCoord) * y + 13 + yOffset));
 	}
 	
-	public void drawArrow(Graphics2D g2, double x, double y){
+	public void drawArrow(Graphics2D g2, double x, double y, int xOffset, int yOffset){
 		
 		if (weight == 1){
 			g2.setColor(Color.RED);
@@ -55,16 +56,17 @@ private int weight; //First the edge weight gonna be calculated just by euclidea
 				g2.setColor(Color.ORANGE);
 			}
 		}
-		g2.drawLine((int)((hub1XCoord) * x + 4), (int)((hub1YCoord) * y + 4), (int)((hub2XCoord) * x + 4), (int)((hub2YCoord) * y + 4));
+		g2.drawLine((int)((hub1XCoord) * x + 13 + xOffset), (int)((hub1YCoord) * y + 13 + yOffset),
+				(int)((hub2XCoord) * x + 13 + xOffset), (int)((hub2YCoord) * y + 13 + yOffset));
 		double dy = hub1YCoord - hub2YCoord;
 		double dx = hub1XCoord - hub2XCoord;
 		double theta = Math.atan2(dy, dx);
 		int barb = 10;
 		double X, Y, rho = theta + Math.toRadians(15);
 		for (int jj = 0 ; jj < 2; jj++){
-			X = hub1XCoord*x - barb*Math.cos(rho);
-			Y = hub1YCoord *y- barb*Math.sin(rho);
-			g2.draw(new Line2D.Double(hub1XCoord*x + 4, hub1YCoord*y + 4, X, Y));
+			X = (hub1XCoord + xOffset)*x - barb*Math.cos(rho);
+			Y = (hub1YCoord + yOffset)*y- barb*Math.sin(rho);
+			g2.draw(new Line2D.Double((hub1XCoord + xOffset)*x + 13, (hub1YCoord + yOffset) * y + 13, X, Y));
 			rho = theta - Math.toRadians(15);
 		}
 	}

@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
-
 import TreeModel.IndexCalculus;
 import net.miginfocom.swing.MigLayout;
 
@@ -72,6 +71,8 @@ public class ConsoleVisPanel extends JPanel{
 				jumpSize.setText("<html> <b>Size of jump:");
 				prob.setText("<html> <b>Density of network:");
 				neighb.setText("<html> <b>Number of neighbours:");
+				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().clear();
+				BasicFrame.getPane().getSimTab().repaint();
 				
 			}
 		};

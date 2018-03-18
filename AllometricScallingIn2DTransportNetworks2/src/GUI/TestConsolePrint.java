@@ -2,7 +2,6 @@ package GUI;
 
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
-import TreeModel.IndexCalculus;
 
 public class TestConsolePrint {
 
@@ -21,7 +20,6 @@ public class TestConsolePrint {
 		}
 		BasicFrame frame = new BasicFrame();
 		frame.setVisible(true);
-		//IndexCalculus index = new IndexCalculus();
 	}
 
 }

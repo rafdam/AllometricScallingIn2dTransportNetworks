@@ -41,5 +41,11 @@ public class RawDataTable extends JTable {
 	public HistoricalCalcs getNetworkToDraw(){
 		return networkToDraw;
 	}
+	
+	public void clear(){
+		model.setRowCount(0);
+		networkToDraw = new HistoricalCalcs();
+		dataBase.clear();
+	}
 
 }

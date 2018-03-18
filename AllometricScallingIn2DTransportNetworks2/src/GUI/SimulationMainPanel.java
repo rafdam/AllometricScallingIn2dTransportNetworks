@@ -17,7 +17,10 @@ public class SimulationMainPanel extends JPanel {
 	VisualizationMainPanel visu;
 	ConsoleVisPanel console;
 	SimulationRawDataPanel rawData;
+	int xOffset, yOffset;
 	public SimulationMainPanel() {
+		xOffset = 0;
+		yOffset = 0;
 		setLayout(new MigLayout("", "[] []","[]"));
 		Color color = new Color(235,235,252);
 		setBackground(color);
@@ -34,6 +37,22 @@ public class SimulationMainPanel extends JPanel {
 	
 	public VisualizationMainPanel getVisPanel(){
 		return visu;
+	}
+	
+	public int getXOffset(){
+		return xOffset;
+	}
+	
+	public int getYOffset(){
+		return yOffset;
+	}
+	
+	public void setXOffset(int x){
+		xOffset = x;
+	}
+	
+	public void setYOffset(int y){
+		yOffset = y;
 	}
 	
 	public ConsoleVisPanel getConsolePanel(){
