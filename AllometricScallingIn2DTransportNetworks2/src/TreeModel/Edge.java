@@ -37,7 +37,7 @@ private int weight; //First the edge weight gonna be calculated just by euclidea
 	}
 	
 	public void draw(Graphics g, double x, double y, int xOffset, int yOffset) { 
-		g.setColor(Color.GRAY);
+		g.setColor(Color.DARK_GRAY);
 		g.drawLine((int)((hub1XCoord) * x + 13 + xOffset), (int)((hub1YCoord) * y + 13 + yOffset),
 				(int)((hub2XCoord) * x + 13 + xOffset), (int)((hub2YCoord) * y + 13 + yOffset));
 	}
@@ -61,13 +61,42 @@ private int weight; //First the edge weight gonna be calculated just by euclidea
 		double dy = hub1YCoord - hub2YCoord;
 		double dx = hub1XCoord - hub2XCoord;
 		double theta = Math.atan2(dy, dx);
+		//double theta = Math.atan(Math.tan(dx/dy));
 		int barb = 10;
-		double X, Y, rho = theta + Math.toRadians(15);
+		double X, Y, rho = theta + Math.toRadians(5);
 		for (int jj = 0 ; jj < 2; jj++){
-			X = (hub1XCoord + xOffset)*x - barb*Math.cos(rho);
-			Y = (hub1YCoord + yOffset)*y- barb*Math.sin(rho);
-			g2.draw(new Line2D.Double((hub1XCoord + xOffset)*x + 13, (hub1YCoord + yOffset) * y + 13, X, Y));
-			rho = theta - Math.toRadians(15);
-		}
+			X = (hub1XCoord) * x + 13 - barb*Math.cos(rho) * x / 50;
+			Y = (hub1YCoord) * y +  13 - barb*Math.sin(rho) * y / 50;
+			g2.draw(new Line2D.Double((hub1XCoord)*x + 13 + xOffset, (hub1YCoord) * y + 13 + yOffset, (X + xOffset), (Y + yOffset)));
+			rho = theta - Math.toRadians(5);
+		}	
+		int xx[] = {(int)((hub1XCoord)*x + 13 + xOffset),
+				(int)(((hub1XCoord) * x + 13) - (barb*Math.cos(theta + Math.toRadians(5)) * x / 50) + xOffset),
+				(int)(((hub1XCoord) * x + 13) - (barb*Math.cos(theta - Math.toRadians(5)) * x / 50) + xOffset)};
+		int yy[] = {(int)((hub1YCoord) * y + 13 + yOffset),
+				(int)(((hub1YCoord) * y +  13) - (barb*Math.sin(theta + Math.toRadians(5)) * y / 50) + yOffset),
+				(int)(((hub1YCoord) * y +  13) - (barb*Math.sin(theta - Math.toRadians(5)) * y / 50) + yOffset)};
+		g2.fillPolygon(xx, yy, 3);
+			//g2.draw(new Line2D.Double(((hub1XCoord) * x + 13) - (barb*Math.cos(theta + Math.toRadians(7)) * x / 50) + xOffset,
+			//		((hub1YCoord) * y +  13) - (barb*Math.sin(theta + Math.toRadians(7)) * y / 50) + yOffset,
+			//		((hub1XCoord) * x + 13) - (barb*Math.cos(theta - Math.toRadians(7)) * x / 50) + xOffset,
+			//		((hub1YCoord) * y +  13) - (barb*Math.sin(theta - Math.toRadians(7)) * y / 50) + yOffset));
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

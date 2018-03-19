@@ -104,12 +104,18 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 					max(Comparator.comparing(NetworkHub::getyCartCoord)).get().getyCartCoord();
 			xCoeff = width/xMaxVal * zoomScalling;
 			yCoeff = height/yMaxVal * zoomScalling;
-			int maxZZ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().size();
-			for (int zz = 0 ; zz < maxZZ; zz++){
-				g.setColor(Color.WHITE);
-				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().get(zz).
+			int maxWW = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().size();
+			for (int ww = 0 ; ww < maxWW ; ww++){
+				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().get(ww).
 				draw(g, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
 			}
+			int maxZZ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().size();
+			for (int zz = 0 ; zz < maxZZ; zz++){
+				//g.setColor(Color.WHITE);
+				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().get(zz).
+				drawArrow(g2, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
+			}
+			
 			for (int jj = 0 ; jj < maxJJ; jj++){
 				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).
 				draw(g, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
