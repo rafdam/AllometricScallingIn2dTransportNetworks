@@ -26,11 +26,11 @@ public class SettingsFrame extends JFrame {
 		setSize(300,250);
 		setLayout(new MigLayout());
 		
-		startLField = new JTextField("25");
+		startLField = new JTextField("50");
 		jumpsField = new JTextField("25");
-		jumpSizeField = new JTextField("1");
-		probabilityField = new JTextField("0.75");
-		kNearestNeighboursField = new JTextField("15");
+		jumpSizeField = new JTextField("10");
+		probabilityField = new JTextField("0.2");
+		kNearestNeighboursField = new JTextField("5");
 		
 		startLLabel = new JLabel("<html> <b>Set Start L Value");
 		jumpsLabel = new JLabel("<html> <b>Set number of jumps");

@@ -11,18 +11,21 @@ private String MSTtime;
 		edges = new EdgeList();
 		ArrayList<Integer> checkedHubAdresses = new ArrayList<Integer>(); // list of hubs reached by the network edges
 		ArrayList<Integer> adressesToCheck = new ArrayList<Integer>(); //list of hubs to check their neighbours
+		boolean[] ifChecked = new boolean[list.size()];
 		adressesToCheck.add(iterAdress);
 		checkedHubAdresses.add(hubNumber);
+		ifChecked[hubNumber] = true;
 		long start = System.currentTimeMillis();
 		for (int ii = 0; ii < adressesToCheck.size(); ii++){
 			try{
 				for (int jj = 0; jj < list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().size();jj++){
 					tmpAdress = list.get(adressesToCheck.get(ii)).getNeighbourIndexesList().get(jj);
-					if(checkedHubAdresses.contains(tmpAdress)){
+					if(ifChecked[tmpAdress] == true){
 						//do nothing, get another adress
 					}
 					else{
-						checkedHubAdresses.add(tmpAdress);
+						//checkedHubAdresses.add(tmpAdress);
+						ifChecked[tmpAdress] = true;
 						list.get(tmpAdress).setLevel(list.get(adressesToCheck.get(ii)).getLevel() + 1);
 						edges.add(new Edge(adressesToCheck.get(ii), tmpAdress, list.get(adressesToCheck.get(ii)).getLevel()+1,
 								list.get(adressesToCheck.get(ii)).getxCartCoord(), 

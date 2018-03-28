@@ -21,5 +21,4 @@ public class TestConsolePrint {
 		BasicFrame frame = new BasicFrame();
 		frame.setVisible(true);
 	}
-
 }

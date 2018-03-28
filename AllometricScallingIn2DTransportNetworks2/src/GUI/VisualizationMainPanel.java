@@ -122,7 +122,7 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 			}
 		}
 		catch(NullPointerException ee){
-			//none of drawings specified
+			// when running the program without simulated data there's no x and y maxVals;
 		}
 	}
 }

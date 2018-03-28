@@ -66,7 +66,8 @@ public class IndexCalculus extends Thread{
 	public void run(){
 		int endL = startLVal + (jumpVal * jumps);
 		for (int ii = startLVal; ii < endL ; ii = ii+jumpVal){
-			TreeMap tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
+			TreeMap tmpTreeMap = null;
+			tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
 			pieceOne = (int)tmpTreeMap.getNetwork().size()/2;
 			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), pieceOne);
 			logLVals.add(2 * Math.log10(ii));

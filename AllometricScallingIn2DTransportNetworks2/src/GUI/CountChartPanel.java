@@ -47,7 +47,7 @@ public class CountChartPanel extends JPanel {
 	   	xySeriesCollection.addSeries(linePlot);
 	   	xyDataset = xySeriesCollection;
 	   	scatterPlot = ChartFactory.createScatterPlot
-	        ("Allometric Scalling In distribution Networks",  // Title
+	        ("Allometric Scalling in Distribution Networks",  // Title
 	          "2Log(L)",           // X-Axis label
 	          "Log(C)",           // Y-Axis label
 	          xyDataset,          // Dataset
