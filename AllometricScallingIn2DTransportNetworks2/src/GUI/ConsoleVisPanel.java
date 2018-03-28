@@ -34,7 +34,7 @@ public class ConsoleVisPanel extends JPanel{
 		jumpNumb = new JLabel("<html> <b>Number of jumps:");
 		jumpSize = new JLabel("<html> <b>Size of jump:");
 		prob = new JLabel("<html> <b>Density of network:");
-		neighb = new JLabel("<html> <b>Number of neighbours:");
+		//neighb = new JLabel("<html> <b>Number of neighbours:");
 		
 		ActionListener startAndSetPressed = new ActionListener(){
 			@Override
@@ -50,9 +50,8 @@ public class ConsoleVisPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
-					index = new IndexCalculus(startL, probability, neighbours, jumpSiz, jumpNumber, 5);
+					index = new IndexCalculus(startL, probability, 5, jumpSiz, jumpNumber, 5);
 					index.start();
-					//index.stop();
 				}
 				catch(NullPointerException nullE){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Define all the start Values before you run the simulation");
@@ -70,7 +69,7 @@ public class ConsoleVisPanel extends JPanel{
 				jumpNumb.setText("<html> <b>Number of jumps:");
 				jumpSize.setText("<html> <b>Size of jump:");
 				prob.setText("<html> <b>Density of network:");
-				neighb.setText("<html> <b>Number of neighbours:");
+				//neighb.setText("<html> <b>Number of neighbours:");
 				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().clear();
 				BasicFrame.getPane().getSimTab().repaint();
 				
@@ -83,11 +82,11 @@ public class ConsoleVisPanel extends JPanel{
 		add(startAndSettingsButton);
 		add(startSimulation);
 		add(clearPreviousSims, " wrap");
-		add(stL, "width 20%, height 40%");
-		add(jumpNumb, "width 20%, height 40%");
-		add(jumpSize, "width 20%, height 40%");
-		add(prob, "width 20%, height 40%");
-		add(neighb, "width 20%, height 40%");
+		add(stL, "width 25%, height 40%");
+		add(jumpNumb, "width 25%, height 40%");
+		add(jumpSize, "width 25%, height 40%");
+		add(prob, "width 25%, height 40%");
+		//add(neighb, "width 20%, height 40%");
 	}
 	public JLabel getStL() {
 		return stL;

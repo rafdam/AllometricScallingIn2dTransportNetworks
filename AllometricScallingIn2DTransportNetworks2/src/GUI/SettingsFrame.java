@@ -53,13 +53,13 @@ public class SettingsFrame extends JFrame {
 						return;
 					}
 					BasicFrame.getPane().getSimTab().getConsolePanel().setProbability(Double.parseDouble(probabilityField.getText()));
-					BasicFrame.getPane().getSimTab().getConsolePanel().setNeighbours(Integer.parseInt(kNearestNeighboursField.getText()));
+					//BasicFrame.getPane().getSimTab().getConsolePanel().setNeighbours(Integer.parseInt(kNearestNeighboursField.getText()));
 					
 					BasicFrame.getPane().getSimTab().getConsolePanel().setJumpNumb("<html> <b>Number of jumps: " + jumpsField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setStL("<html> <b>Start L size: " + startLField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setJumpSize("<html> <b>Size of jump: " + jumpSizeField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setProb("<html> <b>Density of network: " + probabilityField.getText());
-					BasicFrame.getPane().getSimTab().getConsolePanel().setNeighb("<html> <b>Number of neighbours: " + kNearestNeighboursField.getText());
+					//BasicFrame.getPane().getSimTab().getConsolePanel().setNeighb("<html> <b>Number of neighbours: " + kNearestNeighboursField.getText());
 				}
 				catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Enter numbers, not letters");
@@ -80,13 +80,13 @@ public class SettingsFrame extends JFrame {
 						return;
 					}
 					BasicFrame.getPane().getSimTab().getConsolePanel().setProbability(Double.parseDouble(probabilityField.getText()));
-					BasicFrame.getPane().getSimTab().getConsolePanel().setNeighbours(Integer.parseInt(kNearestNeighboursField.getText()));
+					//BasicFrame.getPane().getSimTab().getConsolePanel().setNeighbours(Integer.parseInt(kNearestNeighboursField.getText()));
 					
 					BasicFrame.getPane().getSimTab().getConsolePanel().setJumpNumb("<html> <b>Number of jumps: " + jumpsField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setStL("<html> <b>Start L size: " + startLField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setJumpSize("<html> <b>Size of jump: " + jumpSizeField.getText());
 					BasicFrame.getPane().getSimTab().getConsolePanel().setProb("<html> <b>Density of network: " + probabilityField.getText());
-					BasicFrame.getPane().getSimTab().getConsolePanel().setNeighb("<html> <b>Number of neighbours: " + kNearestNeighboursField.getText());
+					//BasicFrame.getPane().getSimTab().getConsolePanel().setNeighb("<html> <b>Number of neighbours: " + kNearestNeighboursField.getText());
 				}
 				catch(NumberFormatException e){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Enter numbers, not letters");
@@ -96,16 +96,16 @@ public class SettingsFrame extends JFrame {
 		};
 		set.addActionListener(setPressed);
 		setNClose.addActionListener(setAndClosePressed);
-		add(startLLabel, "width 60%, height 15%");
-		add(startLField, "width 40%, height 15%, wrap");
-		add(jumpsLabel, "width 60%, height 15%");
-		add(jumpsField, "width 40%, height 15%, wrap");
-		add(jumpSizeLabel, "width 60%, height 15%");
-		add(jumpSizeField, "width 40%, height 15%, wrap");
-		add(probabilityLabel, "width 60%, height 15%");
-		add(probabilityField, "width 40%, height 15%, wrap");
-		add(kNearestNeighboursLabel, "width 60%, height 15%");
-		add(kNearestNeighboursField, "width 40%, height 15%, wrap");
+		add(startLLabel, "width 60%, height 25%");
+		add(startLField, "width 40%, height 25%, wrap");
+		add(jumpsLabel, "width 60%, height 25%");
+		add(jumpsField, "width 40%, height 25%, wrap");
+		add(jumpSizeLabel, "width 60%, height 25%");
+		add(jumpSizeField, "width 40%, height 25%, wrap");
+		add(probabilityLabel, "width 60%, height 25%");
+		add(probabilityField, "width 40%, height 25%, wrap");
+		//add(kNearestNeighboursLabel, "width 60%, height 15%");
+		//add(kNearestNeighboursField, "width 40%, height 15%, wrap");
 		add(set);
 		add(setNClose);
 		
