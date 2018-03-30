@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ public class ConsoleVisPanel extends JPanel{
 	private JLabel stL, jumpNumb, jumpSize, prob, neighb;
 	private int startL, jumpNumber, jumpSiz, neighbours;
 	private double  probability;
+	private JCheckBox recalcMSTForGivenStartHub;
 	SettingsFrame setFrame;
 	IndexCalculus index;
 	public ConsoleVisPanel() {
@@ -28,14 +30,19 @@ public class ConsoleVisPanel extends JPanel{
 		setBackground(color);
 		setBorder(new LineBorder(Color.BLACK, 2));
 		JButton startAndSettingsButton = new JButton("<html> <b>Define Network");
+		startAndSettingsButton.setToolTipText("Define params for simulation");
 		JButton startSimulation = new JButton("<html> <b>Run Simulation");
+		startSimulation.setToolTipText("Run simulation based on previously set params");
 		JButton clearPreviousSims = new JButton("<html> <b>Clear Previous Data");
+		clearPreviousSims.setToolTipText("Delete all historical data in chart and database");
+		recalcMSTForGivenStartHub = new JCheckBox("<html> <b> Enable network recalculations");
+		recalcMSTForGivenStartHub.setToolTipText("Middle click on drawn hub to recalculate Minimal Spanning Tree starting from selected hub, or Right Click to create Sub Network");
 		stL = new JLabel("<html> <b>Start L size: ");
 		jumpNumb = new JLabel("<html> <b>Number of jumps:");
 		jumpSize = new JLabel("<html> <b>Size of jump:");
 		prob = new JLabel("<html> <b>Density of network:");
 		//neighb = new JLabel("<html> <b>Number of neighbours:");
-		
+		recalcMSTForGivenStartHub.setEnabled(false);
 		ActionListener startAndSetPressed = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -73,6 +80,7 @@ public class ConsoleVisPanel extends JPanel{
 				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().clear();
 				BasicFrame.getPane().getSimTab().repaint();
 				
+				
 			}
 		};
 		
@@ -81,6 +89,7 @@ public class ConsoleVisPanel extends JPanel{
 		clearPreviousSims.addActionListener(clearDataPressed);
 		add(startAndSettingsButton);
 		add(startSimulation);
+		add(recalcMSTForGivenStartHub);
 		add(clearPreviousSims, " wrap");
 		add(stL, "width 25%, height 40%");
 		add(jumpNumb, "width 25%, height 40%");
@@ -94,6 +103,10 @@ public class ConsoleVisPanel extends JPanel{
 	
 	public void setStL(String text){
 		stL.setText(text);
+	}
+	
+	public JCheckBox getRecalcBox(){
+		return recalcMSTForGivenStartHub;
 	}
 	
 	public JLabel getJumpNumb() {

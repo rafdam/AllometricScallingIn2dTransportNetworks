@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -20,8 +21,8 @@ public class ScallingMainPanel extends JPanel {
 		setBorder(new LineBorder(Color.BLACK, 2));
 		chart = new CountChartPanel();
 		results = new CountResultsPanel();
-		add(chart, "width 70%, height 100%");
-		add(results, "width 30%, height 100%");
+		add(chart, "width 60%, height 100%");
+		add(results, "width 40%, height 100%");
 	}
 	
 	public CountResultsPanel getResults(){
@@ -30,5 +31,8 @@ public class ScallingMainPanel extends JPanel {
 	
 	public CountChartPanel getChart(){
 		return chart;
+	}
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
 	}
 }

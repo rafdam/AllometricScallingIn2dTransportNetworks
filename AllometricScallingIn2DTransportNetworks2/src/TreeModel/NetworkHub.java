@@ -2,6 +2,7 @@ package TreeModel;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 public class NetworkHub {
@@ -11,6 +12,7 @@ private int zCartCoord;
 private int level; // defines the level of the hub specified by spanning tree
 public boolean inTriangle;
 private ArrayList<Integer> neighbourIndexesList;
+private ArrayList<Integer> minimalTreeNeighbourIndexesList;
 	
 	public NetworkHub(int x, int y) {
 		xCartCoord = x;
@@ -19,6 +21,7 @@ private ArrayList<Integer> neighbourIndexesList;
 		zCartCoord = 0;
 		new ArrayList<NetworkHub>();
 		neighbourIndexesList = new ArrayList<Integer>();
+		minimalTreeNeighbourIndexesList = new ArrayList<Integer>();
 	}
 	public NetworkHub(){
 		
@@ -57,6 +60,12 @@ private ArrayList<Integer> neighbourIndexesList;
 	public void addToNeighbourIndexesList(int index){
 		neighbourIndexesList.add(index);
 	}
+	public void addToMinimalNeighbourIndexesList(int index){
+		minimalTreeNeighbourIndexesList.add(index);
+	}
+	public ArrayList<Integer> getMinimalNeighbourIndexesList(){
+		return minimalTreeNeighbourIndexesList;
+	}
 	public void setInTriangle(boolean a){
 		inTriangle = a;
 	}
@@ -68,9 +77,9 @@ private ArrayList<Integer> neighbourIndexesList;
 	}
 	
 	public void draw(Graphics g, double x, double y, int xOffset, int yOffset) { // drawing a stationary charge as a pink oval (moved x/y oval coords are centering the oval to the right place)
-		
-		Color color = new Color(221,234,240);
-		g.setColor(color);
-		g.fillOval((int)((xCartCoord) * x + 11 + xOffset), (int)((yCartCoord ) * y + 11 + yOffset), 4, 4);
+		Graphics2D g2d = (Graphics2D) g;
+		Color color = new Color(0,255,0);
+		g2d.setColor(color);
+		g2d.fillOval((int)((xCartCoord) * x + 13 + xOffset), (int)((yCartCoord ) * y + 13 + yOffset), 10, 10);
 	}
 }

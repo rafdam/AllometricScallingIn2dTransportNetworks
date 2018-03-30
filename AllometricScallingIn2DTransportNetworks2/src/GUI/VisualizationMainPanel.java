@@ -8,11 +8,17 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
 import java.util.Comparator;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
+import TreeModel.IndexCalculus;
 import TreeModel.NetworkHub;
 
 public class VisualizationMainPanel extends JPanel implements MouseWheelListener {
@@ -23,36 +29,132 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 	private static final long serialVersionUID = 1L;
 	Double zoomScalling;
 	private volatile int draggedAtX, draggedAtY;
+	private volatile int clickedAtX, clickedAtY;
 	double xCoeff, yCoeff;
+	private int foundX, foundY;
 	//int xOffset, yOffset;
 	int tmpXOffset, tmpYOffset;
+	private ArrayList<Ellipse2D> ovalList;
+	boolean foundContainingOval;
+	private ArrayList<NetworkHub> clickedHub;
 	public VisualizationMainPanel() {
+		ovalList= new ArrayList<Ellipse2D>();
+		clickedHub = new ArrayList<NetworkHub>();
 		zoomScalling = 1.0;
 		Color color = new Color(0,0,0);
+		foundContainingOval = false;
 		setBackground(color);
 		setBorder(new LineBorder(Color.WHITE, 4));
 		addMouseWheelListener(this);
 		
 		addMouseListener(new MouseAdapter(){
+			
             public void mousePressed(MouseEvent e){
-                draggedAtX = e.getX();
-                draggedAtY = e.getY();
-                tmpXOffset = BasicFrame.getPane().getSimTab().getXOffset();
-                tmpYOffset = BasicFrame.getPane().getSimTab().getYOffset();
+            	if(SwingUtilities.isLeftMouseButton(e)){
+	                draggedAtX = e.getX();
+	                draggedAtY = e.getY();
+	                tmpXOffset = BasicFrame.getPane().getSimTab().getXOffset();
+	                tmpYOffset = BasicFrame.getPane().getSimTab().getYOffset();
+            	}
+            	if(SwingUtilities.isMiddleMouseButton(e)){
+            		clickedAtX = e.getX();
+	                clickedAtY = e.getY();
+	                if(BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().isSelected()){
+	                	for(int ii = 0 ; ii < ovalList.size(); ii++){
+		                	if(ovalList.get(ii).contains(clickedAtX, clickedAtY)){
+		                		foundContainingOval = true;
+		                		foundX = (int) ((ovalList.get(ii).getX() - 3 - BasicFrame.getPane().getSimTab().getXOffset())/xCoeff);
+		                		foundY = (int) ((ovalList.get(ii).getY() - 3 - BasicFrame.getPane().getSimTab().getYOffset())/yCoeff);
+		                		if(foundContainingOval == true){
+		                    		//int startHub = 0;
+		    	                	for(int jj = 0; jj < BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size(); jj ++){
+		    	                		if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
+		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
+		    	                			clickedHub.clear();
+		    	                			clickedHub.add(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj));
+		    	    	                	BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().recalcMSTForSelectedNetwork(jj);
+		    	                			repaint();
+		    	                			foundContainingOval = false;
+		    	                			break;
+		    	                		}
+		    	                	}
+		                    	}
+		                		break;
+		                	}
+		                }
+	                }
+            	}
+            	
+            	if(SwingUtilities.isRightMouseButton(e)){
+            		clickedAtX = e.getX();
+	                clickedAtY = e.getY();
+	                if(BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().isSelected()){
+	                	for(int ii = 0 ; ii < ovalList.size(); ii++){
+		                	if(ovalList.get(ii).contains(clickedAtX, clickedAtY)){
+		                		foundContainingOval = true;
+		                		foundX = (int) ((ovalList.get(ii).getX() - 3 - BasicFrame.getPane().getSimTab().getXOffset())/xCoeff);
+		                		foundY = (int) ((ovalList.get(ii).getY() - 3 - BasicFrame.getPane().getSimTab().getYOffset())/yCoeff);
+		                		if(foundContainingOval == true){
+		                			for(int jj = 0; jj < BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size(); jj ++){
+		    	                		if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
+		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
+		    	                			clickedHub.clear();
+		    	                			clickedHub.add(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj));
+		    	                			//DecisionWindow chooser = new DecisionWindow(jj);
+		    	                			Object[] options = {"SubNetwork of MaximalNetwork", "SubNetwork of SubNetwork", "Re-draw Maximal Network", "None"};
+		    	                			JFrame frame = new JFrame();
+		    	                			int decision = JOptionPane.showOptionDialog(frame, "What kind of SubNework would you like to count & draw",
+		    	                					"Select SubNetwork Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		    	                			System.out.println(decision);
+		    	                			if(decision == 0){
+		    	                				int returner = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().recalcSubNetwork(jj);
+		    	                				if (returner == 0){
+		    	                					clickedHub.clear();
+		    	                					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"You pressed ending hub, none to recalculate or re-draw");
+		    	                				}
+		    	                			}
+		    	                			else if(decision == 1){
+		    	                				int returner = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().recalcSubSubNetwork(jj);
+		    	                				if (returner == 0){
+		    	                					clickedHub.clear();
+		    	                					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"You pressed ending hub, none to recalculate or re-draw");
+		    	                				}
+		    	                			}
+		    	                			else if(decision == 2){
+		    	                				if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
+		    		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
+		    		    	                			clickedHub.clear();
+		    		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().redrawMaximalNetwork();
+		    		    	                			repaint();
+		    		    	                			foundContainingOval = false;
+		    		    	                			break;
+		    		    	                		}
+		    	                			}
+		    	                			else{
+		    	                				clickedHub.clear();
+		    	                			}
+		    	                			
+		    	                			repaint();
+		    	                			foundContainingOval = false;
+		    	                			break;
+		    	                		}
+		    	                	}
+		                    	}
+		                		break;
+		                	}
+		                }
+	                }
+            	}
             }
-            /*
-            public void mouseReleased(MouseEvent e){
-            	BasicFrame.getPane().getSimTab().setXOffset((e.getX() - draggedAtX)/2);
-            	BasicFrame.getPane().getSimTab().setYOffset((e.getY() - draggedAtY)/2);
-            }
-            */
 		});
 		
 		addMouseMotionListener(new MouseMotionAdapter(){
             public void mouseDragged(MouseEvent e){
-            	BasicFrame.getPane().getSimTab().setXOffset(tmpXOffset + (e.getX() - draggedAtX));
-            	BasicFrame.getPane().getSimTab().setYOffset(tmpYOffset + (e.getY() - draggedAtY));
-            	repaint();
+            	if(SwingUtilities.isLeftMouseButton(e)){
+	            	BasicFrame.getPane().getSimTab().setXOffset(tmpXOffset + (e.getX() - draggedAtX));
+	            	BasicFrame.getPane().getSimTab().setYOffset(tmpYOffset + (e.getY() - draggedAtY));
+	            	repaint();
+            	}
             }
         });
 
@@ -91,38 +193,72 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
         }
     }
 	
+	public void ClearClicked(){
+		clickedHub.clear();
+	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		double width = BasicFrame.getPane().getSimTab().getVisPanel().getWidth()-26;
 		double height = BasicFrame.getPane().getSimTab().getVisPanel().getHeight()-26;
 		try{
-			int maxJJ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size();
 			double xMaxVal = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().stream().
 					max(Comparator.comparing(NetworkHub::getxCartCoord)).get().getxCartCoord();
 			double yMaxVal = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().stream().
 					max(Comparator.comparing(NetworkHub::getyCartCoord)).get().getyCartCoord();
 			xCoeff = width/xMaxVal * zoomScalling;
 			yCoeff = height/yMaxVal * zoomScalling;
-			int maxWW = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().size();
-			for (int ww = 0 ; ww < maxWW ; ww++){
-				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().get(ww).
-				draw(g, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
-			}
-			int maxZZ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().size();
-			for (int zz = 0 ; zz < maxZZ; zz++){
-				//g.setColor(Color.WHITE);
-				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().get(zz).
-				drawArrow(g2, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
-			}
-			
-			for (int jj = 0 ; jj < maxJJ; jj++){
-				BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).
-				draw(g, xCoeff, yCoeff, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
-			}
+			drawMaximal(g2, xCoeff, yCoeff);
+			drawMinimal(g2, xCoeff, yCoeff);
+			drawVerticles(g2, xCoeff, yCoeff);
+			drawClickedNetwork(g2, xCoeff, yCoeff);
 		}
 		catch(NullPointerException ee){
 			// when running the program without simulated data there's no x and y maxVals;
+		}
+	}
+	
+	public void drawMaximal(Graphics g, double xCo, double yCo){
+		int maxWW = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().size();
+		for (int ww = 0 ; ww < maxWW ; ww++){
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().get(ww).
+			draw(g, xCo, yCo, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
+		}
+	}
+	
+	public void drawMinimal(Graphics2D g, double xCo, double yCo){
+		int maxZZ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().size();
+		for (int zz = 0 ; zz < maxZZ; zz++){
+			//g.setColor(Color.WHITE);
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMinimalSpanningEdgeList().get(zz).
+			drawArrow(g, xCo, yCo, BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
+		}
+	}
+	
+	public void drawVerticles(Graphics2D g2, double xCo, double yCo){
+		int maxJJ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size();
+		for (int jj = 0 ; jj < maxJJ; jj++){
+			Color color = new Color(221,234,240);
+			g2.setColor(color);
+			Ellipse2D oval = new Ellipse2D.Double(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord()
+					* xCo + 13 + BasicFrame.getPane().getSimTab().getXOffset(),
+					BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord()
+					* yCo + 13 + BasicFrame.getPane().getSimTab().getYOffset(), 10, 10);
+			ovalList.add(oval);
+			g2.fill(oval);
+		}
+	}
+	public void drawSubNetwork(){
+		
+	}
+	
+	public void drawClickedNetwork(Graphics2D g2, double xCo, double yCo){
+		try{
+			clickedHub.get(clickedHub.size() - 1).draw(g2, xCo, yCo,
+					BasicFrame.getPane().getSimTab().getXOffset(), BasicFrame.getPane().getSimTab().getYOffset());
+		}
+		catch(ArrayIndexOutOfBoundsException ww){
+			
 		}
 	}
 }

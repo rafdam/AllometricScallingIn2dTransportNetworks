@@ -28,7 +28,7 @@ public class SimulationMainPanel extends JPanel {
 		visu = new VisualizationMainPanel();
 		console = new ConsoleVisPanel();
 		rawData = new SimulationRawDataPanel();
-		JLabel author = new JLabel("Authors:");
+		JLabel author = new JLabel("<html><b>Authors: <br> Rafał Jankowski & <br> dr hab. Agata Fronczak");
 		add(visu, "width 80%, height 90%");
 		add(rawData, "width 20%, height 90%, span");
 		add(console, "width 80%, height 10%");

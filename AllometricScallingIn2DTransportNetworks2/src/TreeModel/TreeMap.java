@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TreeMap {
-private HubList map; // 
+private HubList map; // list of all verticles
 private EdgeList edges; // list containing all the edges with their weights
-private int size; // true / false cube representing if the hub is in the spot or not
-public double hubbingProbability; //just a container to later statistics
+private int size; 
+public double hubbingProbability; 
 private String MNtime;
 
 	public TreeMap(int siz, double prob, int neighbours){
@@ -15,7 +15,7 @@ private String MNtime;
 		edges = new EdgeList();
 		size = siz;
 		hubbingProbability = prob;
-		
+		long start = System.currentTimeMillis();
 		int[][] cuboid = new int[siz][siz];
 		ArrayList<XYZ> points = new ArrayList<XYZ>();
 		for (int ii = 0; ii < siz; ii++){
@@ -94,6 +94,7 @@ private String MNtime;
 						 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] = true;
 			}	
 		}
+		MNtime = Long.toString(System.currentTimeMillis() - start);
 		/*
 			copy-paste the following output into free processing:
 			http://processing.org/
@@ -199,7 +200,7 @@ private String MNtime;
 								//in case the algorithm would like to check -1 index in the cube
 							}
 						}
-					}
+					}MNtime = Long.toString(System.currentTimeMillis() - start);
 				loopCounter = loopCounter + 1;
 				if (loopCounter > siz){
 					break;

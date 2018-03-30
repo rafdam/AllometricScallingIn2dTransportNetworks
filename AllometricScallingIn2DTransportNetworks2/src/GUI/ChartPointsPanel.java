@@ -20,9 +20,9 @@ public class ChartPointsPanel extends JPanel {
 		setBackground(color);
 		setBorder(new LineBorder(Color.BLACK, 2));
 		table = new ChartPointsTable();	
-		add(table);
+		add(table, "width 100%, height 100%");
 		JScrollPane pane = new JScrollPane(table);  // Scroll for table of charges
-		add(pane);
+		add(pane, "width 100%, height 100%");
 	}
 	
 	public ChartPointsTable getTable(){

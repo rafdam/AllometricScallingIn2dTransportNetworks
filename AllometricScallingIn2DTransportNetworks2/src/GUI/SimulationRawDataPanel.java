@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,21 +31,23 @@ public class SimulationRawDataPanel extends JPanel {
 		setBorder(new LineBorder(Color.BLACK, 2));
 		previousData = new RawDataTable();
 		add(previousData);
-		JScrollPane pane = new JScrollPane(previousData);  // Scroll for table 
+		JScrollPane pane = new JScrollPane(previousData);
 		add(pane, "height 80%, wrap");
 		JButton drawSpecifiedNetwork = new JButton("<html> <b>Draw Selected Network");
-		add(drawSpecifiedNetwork, "width 100%");
-		drawSpecifiedNetwork.setEnabled(false);
+		add(drawSpecifiedNetwork, "width 100%, wrap");
 		
+		drawSpecifiedNetwork.setEnabled(false);
 		previousData.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-
+			
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				if(previousData.getSelectedRow() > -1) {
 					drawSpecifiedNetwork.setEnabled(true);
+					BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(true);
 				}
 				else{
 					drawSpecifiedNetwork.setEnabled(false);
+					BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(false);
 				}
 			}	
 		});
@@ -53,12 +56,15 @@ public class SimulationRawDataPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try{
+					if(previousData.selectedIndex != previousData.getSelectedRow()){
+						BasicFrame.getPane().getSimTab().getVisPanel().ClearClicked();
+					}
+					previousData.selectedIndex = previousData.getSelectedRow();
 					HubList list = previousData.getDataBase().get(previousData.getSelectedRow()).getVerticleList();
 					EdgeList maxNetwork = previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList();
 					EdgeList minimalSpann = previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList();
 					BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list, maxNetwork, minimalSpann);
 					BasicFrame.getPane().getSimTab().repaint();
-					//BasicFrame.getPane().getSimTab().getVisPanel().zeroOffsets();
 				}
 				catch(ArrayIndexOutOfBoundsException ee){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Select one of historical calcs");
