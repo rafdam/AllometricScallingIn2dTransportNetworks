@@ -3,7 +3,6 @@ package TreeModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Line2D;
 
 public class Edge {
 private int startHubAdress; 
@@ -68,7 +67,6 @@ private int weight;
 		double dx = hub1XCoord - hub2XCoord;
 		double theta = Math.atan2(dy, dx);
 		int barb = 10;
-		double X, Y, rho = theta + Math.toRadians(5);
 		int xx[] = {(int)((hub1XCoord)*x + 18 + xOffset),
 				(int)(((hub1XCoord) * x + 18) - (barb*Math.cos(theta + Math.toRadians(5)) * x / 20) + xOffset),
 				(int)(((hub1XCoord) * x + 18) - (barb*Math.cos(theta - Math.toRadians(5)) * x / 20) + xOffset)};

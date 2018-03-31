@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 
-import TreeModel.IndexCalculus;
 import TreeModel.NetworkHub;
 
 public class VisualizationMainPanel extends JPanel implements MouseWheelListener {

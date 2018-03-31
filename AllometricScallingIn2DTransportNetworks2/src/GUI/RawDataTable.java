@@ -9,7 +9,6 @@ import javax.swing.table.DefaultTableModel;
 
 import TreeModel.HistoricalCalcs;
 import TreeModel.HubList;
-import TreeModel.IndexCalculus;
 import TreeModel.MinimalSpanningTree;
 
 public class RawDataTable extends JTable {

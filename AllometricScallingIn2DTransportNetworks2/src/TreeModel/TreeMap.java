@@ -1,8 +1,6 @@
 package TreeModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 public class TreeMap {
 private HubList map; // list of all verticles
 private EdgeList edges; // list containing all the edges with their weights

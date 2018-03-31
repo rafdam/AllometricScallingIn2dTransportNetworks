@@ -112,11 +112,9 @@ public class Triangulate {
 		IEDGE 	edges[] 		= null;
 		int 	nedge 			= 0;
 		int 	trimax, emax 	= 200;
-		int 	status 			= 0;
-		
 		boolean	inside;
 		//int 	i, j, k;
-		double 	xp, yp, x1, y1, x2, y2, x3, y3, xc, yc, r;
+		double 	xp, yp, x1, y1, x2, y2, x3, y3, xc, r;
 		double 	xmin, xmax, ymin, ymax, xmid, ymid;
 		double 	dx, dy, dmax;
 		
@@ -203,7 +201,7 @@ public class Triangulate {
 				x3 = pxyz.get(v[j].p3).x;
 				y3 = pxyz.get(v[j].p3).y;
 				inside = CircumCircle( xp, yp,  x1, y1,  x2, y2,  x3, y3,  circle );
-				xc = circle.x; yc = circle.y; r = circle.z;
+				xc = circle.x; r = circle.z;
 				if (xc + r < xp) complete[j] = true;
 				if (inside)
 				{
