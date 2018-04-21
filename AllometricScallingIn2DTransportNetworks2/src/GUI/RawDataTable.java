@@ -59,22 +59,35 @@ public class RawDataTable extends JTable {
 		double prob = BasicFrame.getPane().getSimTab().getConsolePanel().getProbability();
 		DecimalFormat df = new DecimalFormat(".##");
 		tmpSpanTree = new MinimalSpanningTree(list, subHub, true);
-		model.addRow(new Object[]{dataBase.size() + 1, Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob), tmpSpanTree.getSubNetwork().size() + 1});
-		dataBase.add(new HistoricalCalcs(list, tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges()));
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob),
+		model.addRow(new Object[]{dataBase.size() + 1, Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob), tmpSpanTree.getSubNetwork().size()});
+		dataBase.add(new HistoricalCalcs(list, tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList(), tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMaximalMinimalTree()));
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
 				df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 
 				tmpSpanTree.MinimalRequiredAmount(), 
 				df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
 				(String)BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().getValueAt(selectedIndex, 4),
 				tmpSpanTree.getMSTTime());
-		BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob)),
+		BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)),
 				Math.log10(tmpSpanTree.MinimalRequiredAmount()));
-		BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list, dataBase.get(selectedIndex).getMaximalNetworkEdgeList(), tmpSpanTree.getEdges());
+		if(BasicFrame.getPane().getSimTab().getRawDataPanel().drawSubNetworkSpecs.isSelected()){
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list,
+					dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
+					tmpSpanTree.getEdges());
+		}
+		else{
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(tmpSpanTree.getSubNetwork(),
+					dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
+					tmpSpanTree.getEdges());
+		}
+			
+		//BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list,
+		//		dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
+		//		tmpSpanTree.getEdges());
 		BasicFrame.getPane().getSimTab().repaint();
-		setRowSelectionInterval(0, dataBase.size() - 1);
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob)));//logLVals.add(2 * Math.log10(ii));
+		setRowSelectionInterval(dataBase.size() - 1, dataBase.size() - 1);
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)));//logLVals.add(2 * Math.log10(ii));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob));
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addCVals(tmpSpanTree.MinimalRequiredAmount());
 		double averageL = 0;
 		double averageC = 0;
@@ -104,7 +117,7 @@ public class RawDataTable extends JTable {
 		HubList list = dataBase.get(selectedIndex).getVerticleList();
 		BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list,
 				dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
-				dataBase.get(selectedIndex).getMinimalSpanningEdgeList());
+				dataBase.get(selectedIndex).getMaximalMinimalTree());
 	}
 	
 	public int recalcSubSubNetwork(int subHub){
@@ -112,10 +125,12 @@ public class RawDataTable extends JTable {
 		MinimalSpanningTree tmpSpanTree;
 		if(dataBase.get(selectedIndex).getSubNetwork().size() < 1){
 			list = dataBase.get(selectedIndex).getVerticleList();
+			//return 0;
 		}
 		else{
 			list = dataBase.get(selectedIndex).getSubNetwork();
 		}
+		list = dataBase.get(selectedIndex).getVerticleList();
 		if(list.get(subHub).getMinimalNeighbourIndexesList().size() < 1){
 			return 0;
 		}
@@ -125,22 +140,32 @@ public class RawDataTable extends JTable {
 		double prob = BasicFrame.getPane().getSimTab().getConsolePanel().getProbability();
 		DecimalFormat df = new DecimalFormat(".##");
 		tmpSpanTree = new MinimalSpanningTree(list, subHub, true);
-		model.addRow(new Object[]{dataBase.size() + 1, Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob), tmpSpanTree.getSubNetwork().size() + 1});
-		dataBase.add(new HistoricalCalcs(dataBase.get(selectedIndex).getVerticleList(), tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges()));
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob),
+		model.addRow(new Object[]{dataBase.size()+1, Math.sqrt((tmpSpanTree.getSubNetwork().size()+1) / prob), tmpSpanTree.getSubNetwork().size()});
+		dataBase.add(new HistoricalCalcs(dataBase.get(selectedIndex).getVerticleList(), tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMaximalMinimalTree()));
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
 				df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 
 				tmpSpanTree.MinimalRequiredAmount(), 
 				df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
 				(String)BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().getValueAt(selectedIndex, 4),
 				tmpSpanTree.getMSTTime());
-		BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob)),
+		BasicFrame.getPane().getCountTab().getChart().addPointsToChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)),
 				Math.log10(tmpSpanTree.MinimalRequiredAmount()));
-		BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list, dataBase.get(selectedIndex).getMaximalNetworkEdgeList(), tmpSpanTree.getEdges());
+		//BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list, dataBase.get(selectedIndex).getMaximalNetworkEdgeList(), tmpSpanTree.getEdges());
+		if(BasicFrame.getPane().getSimTab().getRawDataPanel().drawSubNetworkSpecs.isSelected()){
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list,
+					dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
+					tmpSpanTree.getEdges());
+		}
+		else{
+			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(tmpSpanTree.getSubNetwork(),
+					dataBase.get(selectedIndex).getMaximalNetworkEdgeList(),
+					tmpSpanTree.getEdges());
+		}
 		BasicFrame.getPane().getSimTab().repaint();
 		setRowSelectionInterval(0, dataBase.size() - 1);
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob)));//logLVals.add(2 * Math.log10(ii));
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)));//logLVals.add(2 * Math.log10(ii));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
-		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size() + 1) / prob));
+		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addCVals(tmpSpanTree.MinimalRequiredAmount());
 		double averageL = 0;
 		double averageC = 0;
@@ -175,7 +200,7 @@ public class RawDataTable extends JTable {
 		DecimalFormat df = new DecimalFormat(".##");
 		MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(list, startHub, false);
 		model.addRow(new Object[]{dataBase.size() + 1, model.getValueAt(selectedIndex, 1), list.size()});
-		dataBase.add(new HistoricalCalcs(list, dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges()));
+		dataBase.add(new HistoricalCalcs(list, new HubList(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMinimalSpanningEdgeList()));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow((int)model.getValueAt(selectedIndex, 1),
 				df.format(2* Math.log10((int)model.getValueAt(selectedIndex, 1))), 
 				tmpSpanTree.MinimalRequiredAmount(), 

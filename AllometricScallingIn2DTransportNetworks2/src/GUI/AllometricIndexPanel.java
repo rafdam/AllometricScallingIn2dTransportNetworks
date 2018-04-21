@@ -22,10 +22,6 @@ public class AllometricIndexPanel extends JPanel {
 		add(resultLabel);
 	}
 	
-	public void setText(String text){
-		
-	}
-	
 	public AllometricIndexText getLabel(){
 		return resultLabel;
 	}

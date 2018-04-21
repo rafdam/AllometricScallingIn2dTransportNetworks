@@ -36,13 +36,11 @@ public class ConsoleVisPanel extends JPanel{
 		JButton clearPreviousSims = new JButton("<html> <b>Clear Previous Data");
 		clearPreviousSims.setToolTipText("Delete all historical data in chart and database");
 		recalcMSTForGivenStartHub = new JCheckBox("<html> <b> Enable network recalculations");
-		recalcMSTForGivenStartHub.setToolTipText("Middle click on drawn hub to recalculate Minimal Spanning Tree starting from selected hub, or Right Click to create Sub Network");
+		recalcMSTForGivenStartHub.setToolTipText("Right Click on Hub to create Sub Network");
 		stL = new JLabel("<html> <b>Start L size: ");
 		jumpNumb = new JLabel("<html> <b>Number of jumps:");
 		jumpSize = new JLabel("<html> <b>Size of jump:");
 		prob = new JLabel("<html> <b>Density of network:");
-		//neighb = new JLabel("<html> <b>Number of neighbours:");
-		recalcMSTForGivenStartHub.setEnabled(false);
 		ActionListener startAndSetPressed = new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

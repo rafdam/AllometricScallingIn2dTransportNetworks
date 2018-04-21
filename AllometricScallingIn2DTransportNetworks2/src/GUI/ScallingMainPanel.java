@@ -15,7 +15,6 @@ public class ScallingMainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	CountChartPanel chart;
 	CountResultsPanel results;
-	
 	public ScallingMainPanel() {
 		setLayout(new MigLayout());
 		setBorder(new LineBorder(Color.BLACK, 2));

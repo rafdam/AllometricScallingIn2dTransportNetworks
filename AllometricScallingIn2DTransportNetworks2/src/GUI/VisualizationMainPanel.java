@@ -11,6 +11,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -55,52 +56,23 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 	                tmpXOffset = BasicFrame.getPane().getSimTab().getXOffset();
 	                tmpYOffset = BasicFrame.getPane().getSimTab().getYOffset();
             	}
-            	if(SwingUtilities.isMiddleMouseButton(e)){
-            		clickedAtX = e.getX();
-	                clickedAtY = e.getY();
-	                if(BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().isSelected()){
-	                	for(int ii = 0 ; ii < ovalList.size(); ii++){
-		                	if(ovalList.get(ii).contains(clickedAtX, clickedAtY)){
-		                		foundContainingOval = true;
-		                		foundX = (int) ((ovalList.get(ii).getX() - 3 - BasicFrame.getPane().getSimTab().getXOffset())/xCoeff);
-		                		foundY = (int) ((ovalList.get(ii).getY() - 3 - BasicFrame.getPane().getSimTab().getYOffset())/yCoeff);
-		                		if(foundContainingOval == true){
-		                    		//int startHub = 0;
-		    	                	for(int jj = 0; jj < BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size(); jj ++){
-		    	                		if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
-		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
-		    	                			clickedHub.clear();
-		    	                			clickedHub.add(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj));
-		    	    	                	BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().recalcMSTForSelectedNetwork(jj);
-		    	                			repaint();
-		    	                			foundContainingOval = false;
-		    	                			break;
-		    	                		}
-		    	                	}
-		                    	}
-		                		break;
-		                	}
-		                }
-	                }
-            	}
-            	
             	if(SwingUtilities.isRightMouseButton(e)){
+            		foundContainingOval = false;
             		clickedAtX = e.getX();
 	                clickedAtY = e.getY();
 	                if(BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().isSelected()){
 	                	for(int ii = 0 ; ii < ovalList.size(); ii++){
 		                	if(ovalList.get(ii).contains(clickedAtX, clickedAtY)){
 		                		foundContainingOval = true;
-		                		foundX = (int) ((ovalList.get(ii).getX() - 3 - BasicFrame.getPane().getSimTab().getXOffset())/xCoeff);
-		                		foundY = (int) ((ovalList.get(ii).getY() - 3 - BasicFrame.getPane().getSimTab().getYOffset())/yCoeff);
+		                		foundX = (int) Math.round(((ovalList.get(ii).getX() - 13 - BasicFrame.getPane().getSimTab().getXOffset())/xCoeff));
+		                		foundY = (int) Math.round(((ovalList.get(ii).getY() - 13 - BasicFrame.getPane().getSimTab().getYOffset())/yCoeff));
 		                		if(foundContainingOval == true){
 		                			for(int jj = 0; jj < BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size(); jj ++){
 		    	                		if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
 		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
 		    	                			clickedHub.clear();
 		    	                			clickedHub.add(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj));
-		    	                			//DecisionWindow chooser = new DecisionWindow(jj);
-		    	                			Object[] options = {"SubNetwork of MaximalNetwork", "SubNetwork of SubNetwork", "Re-draw Maximal Network", "None"};
+		    	                			Object[] options = {"SubNetwork of MaximalNetwork", "SubNetwork of SubNetwork", "None"};
 		    	                			JFrame frame = new JFrame();
 		    	                			int decision = JOptionPane.showOptionDialog(frame, "What kind of SubNework would you like to count & draw",
 		    	                					"Select SubNetwork Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -116,32 +88,29 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 		    	                				int returner = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().recalcSubSubNetwork(jj);
 		    	                				if (returner == 0){
 		    	                					clickedHub.clear();
-		    	                					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"You pressed ending hub, none to recalculate or re-draw");
+		    	                					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"You are not in Sub Network to draw Sub Network of Sub Network");
 		    	                				}
-		    	                			}
-		    	                			else if(decision == 2){
-		    	                				if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord() == foundX &&
-		    		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord() == foundY){
-		    		    	                			clickedHub.clear();
-		    		    	                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().redrawMaximalNetwork();
-		    		    	                			repaint();
-		    		    	                			foundContainingOval = false;
-		    		    	                			break;
-		    		    	                		}
 		    	                			}
 		    	                			else{
 		    	                				clickedHub.clear();
 		    	                			}
 		    	                			
 		    	                			repaint();
-		    	                			foundContainingOval = false;
+		    	                			//foundContainingOval = false;
 		    	                			break;
 		    	                		}
 		    	                	}
 		                    	}
 		                		break;
 		                	}
+		                	
 		                }
+	                	if(foundContainingOval == false){
+	                		clickedHub.clear();
+                			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().redrawMaximalNetwork();
+                			repaint();
+                			foundContainingOval = false;
+	                	}
 	                }
             	}
             }
@@ -205,8 +174,9 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 					max(Comparator.comparing(NetworkHub::getxCartCoord)).get().getxCartCoord();
 			double yMaxVal = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().stream().
 					max(Comparator.comparing(NetworkHub::getyCartCoord)).get().getyCartCoord();
-			xCoeff = width/xMaxVal * zoomScalling;
-			yCoeff = height/yMaxVal * zoomScalling;
+			double xyMaxVal = Math.max(xMaxVal,  yMaxVal);
+			xCoeff = width/xyMaxVal * zoomScalling;
+			yCoeff = height/xyMaxVal * zoomScalling;
 			drawMaximal(g2, xCoeff, yCoeff);
 			drawMinimal(g2, xCoeff, yCoeff);
 			drawVerticles(g2, xCoeff, yCoeff);
@@ -214,6 +184,9 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 		}
 		catch(NullPointerException ee){
 			// when running the program without simulated data there's no x and y maxVals;
+		}
+		catch (NoSuchElementException ww){
+			//JOptionPane.showMessageDialog(BasicFrame.getPane(),"You have no sub Network specified");
 		}
 	}
 	

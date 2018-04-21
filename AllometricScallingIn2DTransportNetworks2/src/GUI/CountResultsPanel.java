@@ -12,7 +12,8 @@ public class CountResultsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	ChartPointsPanel chartPoints;
 	AllometricIndexPanel indexPanel;
-	
+	AllometricIndexPanel singleIndexPanel;
+	SingleNetworkChartPointsPan singleChart;
 	public CountResultsPanel() {
 		setLayout(new MigLayout());
 		Color color = new Color(235,235,252);
@@ -20,8 +21,14 @@ public class CountResultsPanel extends JPanel {
 		setBorder(new LineBorder(Color.BLACK, 2));
 		chartPoints = new ChartPointsPanel();
 		indexPanel = new AllometricIndexPanel();
-		add(chartPoints, "width 100%, height 60%, wrap");
-		add(indexPanel, "width 100%, height 40%");
+		singleChart = new SingleNetworkChartPointsPan();
+		singleIndexPanel = new AllometricIndexPanel();
+		add(chartPoints, "width 100%, height 45%, wrap");
+		add(indexPanel, "width 100%, height 5%, wrap");
+		add(singleChart, "width 100%, height 45%, wrap");
+		add(singleIndexPanel, "width 100%, height 5%");
+		
+		
 	}
 	
 	public AllometricIndexPanel getIndexPanel(){
@@ -30,5 +37,12 @@ public class CountResultsPanel extends JPanel {
 	
 	public ChartPointsPanel getChartTable(){
 		return chartPoints;
+	}
+	
+	public SingleNetworkChartPointsPan getSingleNetworkChartTable(){
+		return singleChart;
+	}
+	public AllometricIndexPanel getSingleIndexPanel(){
+		return singleIndexPanel;
 	}
 }

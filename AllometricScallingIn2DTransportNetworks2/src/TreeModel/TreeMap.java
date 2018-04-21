@@ -64,7 +64,7 @@ private String MNtime;
 				edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 						 [cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1] = true;
 			}
-			if(edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
+			else if(edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 					 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] != true){
 				edges.add(new Edge(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1,
 						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, 1,
@@ -77,7 +77,7 @@ private String MNtime;
 				edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 						 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] = true;
 			}
-			if(edgoid[cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1]
+			else if(edgoid[cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1]
 					 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] != true){
 				edges.add(new Edge(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1,
 						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, 2,

@@ -41,20 +41,32 @@ private int weight;
 		if (weight == 1){
 			g2.setColor(Color.RED);
 		}
-		else if(weight > 1 && weight < 10){
+		else if(weight >= 1 && weight < 10){
 			Color color = new Color((int)(255 / 10) * weight , 255 - (int)(255 / 10) * weight, 125);
 			g2.setColor(color);
 		}
-		else if(weight > 10  && weight < 20){
+		else if(weight >= 10  && weight < 20){
 			Color color = new Color(255 - (int)(255 / 20) * weight, 125, (int)(255 / 20) * weight);
 			g2.setColor(color);	
 		}
-		else if(weight > 20 && weight < 30){
+		else if(weight >= 20 && weight < 30){
 			Color color = new Color(125, ((int)(255 / 30) * weight), 255 - (int)(255 / 30) * weight);
 			g2.setColor(color);
 		}
-		else if(weight > 30 && weight < 40){
+		else if(weight >= 30 && weight < 40){
 			Color color = new Color(255 - (int)(255 / 40) * weight ,0 , (int)(255 / 40) * weight);
+			g2.setColor(color);
+		}
+		else if(weight >= 40 && weight < 50){
+			Color color = new Color(255 - (int)(255 / 50) * weight ,255 - (int)(255 / 50) * weight , (int)(255 / 50) * weight);
+			g2.setColor(color);
+		}
+		else if(weight >= 50 && weight < 60){
+			Color color = new Color(255 - (int)(255 / 60) * weight , (int)(255 / 60) * weight, (int)(255 / 60) * weight);
+			g2.setColor(color);
+		}
+		else if(weight >= 60 && weight < 70){
+			Color color = new Color(255, 255 - (int)(255 / 70) * weight , (int)(255 / 70) * weight);
 			g2.setColor(color);
 		}
 		else{

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -12,8 +13,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import TreeModel.EdgeList;
-import TreeModel.HubList;
 import net.miginfocom.swing.MigLayout;
 
 public class SimulationRawDataPanel extends JPanel {
@@ -23,6 +22,7 @@ public class SimulationRawDataPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private RawDataTable previousData;
+	public JCheckBox drawSubNetworkSpecs;
 	public SimulationRawDataPanel() {
 		setLayout(new MigLayout());
 		Color color = new Color(235,235,252);
@@ -33,7 +33,10 @@ public class SimulationRawDataPanel extends JPanel {
 		JScrollPane pane = new JScrollPane(previousData);
 		add(pane, "height 80%, wrap");
 		JButton drawSpecifiedNetwork = new JButton("<html> <b>Draw Selected Network");
-		add(drawSpecifiedNetwork, "width 100%, wrap");
+		drawSubNetworkSpecs = new JCheckBox("<html> <b> Draw SubNetwork with Maximal Network Hubs");
+		//add(drawSpecifiedNetwork, "width 100%, wrap");
+		add(drawSubNetworkSpecs);
+		drawSubNetworkSpecs.setSelected(true);
 		
 		drawSpecifiedNetwork.setEnabled(false);
 		previousData.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -41,12 +44,39 @@ public class SimulationRawDataPanel extends JPanel {
 			@Override
 			public void valueChanged(ListSelectionEvent arg0) {
 				if(previousData.getSelectedRow() > -1) {
-					drawSpecifiedNetwork.setEnabled(true);
-					BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(true);
+					//drawSpecifiedNetwork.setEnabled(true);
+					//BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(true);
+					try{
+						if(previousData.selectedIndex != previousData.getSelectedRow()){
+							BasicFrame.getPane().getSimTab().getVisPanel().ClearClicked();
+						}
+						previousData.selectedIndex = previousData.getSelectedRow();
+						
+						if(drawSubNetworkSpecs.isSelected()){
+							BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+									previousData.getDataBase().get(previousData.getSelectedRow()).getVerticleList(),
+									previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+									previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+							BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+						}
+						else{
+							BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+									previousData.getDataBase().get(previousData.getSelectedRow()).getSubNetwork(),
+									previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+									previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+							BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+						}
+						BasicFrame.getPane().getSimTab().repaint();
+						
+					}
+					catch(ArrayIndexOutOfBoundsException ee){
+						JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Select one of historical calcs");
+					}
 				}
 				else{
-					drawSpecifiedNetwork.setEnabled(false);
-					BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(false);
+					//drawSpecifiedNetwork.setEnabled(false);
+					//BasicFrame.getPane().getSimTab().getConsolePanel().getRecalcBox().setEnabled(false);
+					
 				}
 			}	
 		});
@@ -59,11 +89,23 @@ public class SimulationRawDataPanel extends JPanel {
 						BasicFrame.getPane().getSimTab().getVisPanel().ClearClicked();
 					}
 					previousData.selectedIndex = previousData.getSelectedRow();
-					HubList list = previousData.getDataBase().get(previousData.getSelectedRow()).getVerticleList();
-					EdgeList maxNetwork = previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList();
-					EdgeList minimalSpann = previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList();
-					BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(list, maxNetwork, minimalSpann);
+					
+					if(drawSubNetworkSpecs.isSelected()){
+						BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+								previousData.getDataBase().get(previousData.getSelectedRow()).getVerticleList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+						BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+					}
+					else{
+						BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+								previousData.getDataBase().get(previousData.getSelectedRow()).getSubNetwork(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+						BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+					}
 					BasicFrame.getPane().getSimTab().repaint();
+					
 				}
 				catch(ArrayIndexOutOfBoundsException ee){
 					JOptionPane.showMessageDialog(BasicFrame.getPane().getSimTab(),"Select one of historical calcs");
@@ -71,6 +113,35 @@ public class SimulationRawDataPanel extends JPanel {
 			}
 		};
 		drawSpecifiedNetwork.addActionListener(drawPressed);
+		
+		ActionListener networkSpecsChanged = new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(previousData.getSelectedRow() > -1){
+					if(drawSubNetworkSpecs.isSelected()){
+						BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+								previousData.getDataBase().get(previousData.getSelectedRow()).getVerticleList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+						BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+					}
+					else{
+						BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().setParams(
+								previousData.getDataBase().get(previousData.getSelectedRow()).getSubNetwork(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMaximalNetworkEdgeList(),
+								previousData.getDataBase().get(previousData.getSelectedRow()).getMinimalSpanningEdgeList());
+						BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+					}
+				}
+				else{
+					
+				}
+				BasicFrame.getPane().getSimTab().getVisPanel().repaint();
+			}
+		};
+		drawSubNetworkSpecs.addActionListener(networkSpecsChanged);
+		
 	}
 	
 	public RawDataTable getPreviousData(){

@@ -36,7 +36,7 @@ public class IndexCalculus extends Thread{
 		for (int ii = startLVal; ii < endL ; ii = ii+jumpVal){
 			TreeMap tmpTreeMap = null;
 			tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
-			pieceOne = (int)tmpTreeMap.getNetwork().size()/2;
+			pieceOne = 0;//(int)tmpTreeMap.getNetwork().size()/2;
 			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), pieceOne, false);
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(ii));//logLVals.add(2 * Math.log10(ii));
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
@@ -56,7 +56,9 @@ public class IndexCalculus extends Thread{
 			}
 			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addHistData(new HistoricalCalcs(
 																							tmpTreeMap.getNetwork(),
+																							tmpTreeMap.getNetwork(),
 																							tmpTreeMap.getEdges(),
+																							tmpSpanTree.getEdges(),
 																							tmpSpanTree.getEdges()
 																							));
 			BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().addRow(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getDataBase().size(),

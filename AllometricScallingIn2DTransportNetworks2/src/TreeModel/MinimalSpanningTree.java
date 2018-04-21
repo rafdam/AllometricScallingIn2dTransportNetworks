@@ -58,6 +58,7 @@ private HubList subNetwork;
 						else{
 							subNetwork.add(list.get(tmpAdress));
 							ifChecked[tmpAdress] = true;
+							//list.get(adressesToCheck.get(ii)).addToMinimalNeighbourIndexesList(tmpAdress);
 							list.get(tmpAdress).setLevel(list.get(adressesToCheck.get(ii)).getLevel() + 1);
 							edges.add(new Edge(adressesToCheck.get(ii), tmpAdress, list.get(adressesToCheck.get(ii)).getLevel()+1,
 									list.get(adressesToCheck.get(ii)).getxCartCoord(), 
