@@ -9,7 +9,8 @@ private int startHubAdress;
 private int endHubAdress;
 public int hub1XCoord, hub1YCoord, hub2XCoord, hub2YCoord;
 private int weight; 
-	public Edge(int hub1Adress, int hub2Adress, int weightLevel, int x1, int x2, int y1, int y2) {
+private int level;
+	public Edge(int hub1Adress, int hub2Adress, int weightLevel, int x1, int x2, int y1, int y2, int lvl) {
 		weight = weightLevel;
 		startHubAdress = hub1Adress;
 		endHubAdress = hub2Adress;
@@ -17,6 +18,7 @@ private int weight;
 		hub1YCoord = y1;
 		hub2XCoord = x2;
 		hub2YCoord = y2;
+		level = lvl;
 	}
 	
 	public int getStartHubAdress(){
@@ -31,6 +33,14 @@ private int weight;
 		return weight;
 	}
 	
+	public int getLevel(){
+		return level;
+	}
+	
+	public void setLevel(int lvl){
+		level = lvl;
+	}
+	
 	public void draw(Graphics g, double x, double y, int xOffset, int yOffset) { 
 		g.setColor(new Color(33, 33, 33));
 		g.drawLine((int)((hub1XCoord) * x + 18 + xOffset), (int)((hub1YCoord) * y + 18 + yOffset),
@@ -41,10 +51,31 @@ private int weight;
 		if (weight == 1){
 			g2.setColor(Color.RED);
 		}
-		else if(weight >= 1 && weight < 10){
-			Color color = new Color((int)(255 / 10) * weight , 255 - (int)(255 / 10) * weight, 125);
-			g2.setColor(color);
+		else if (weight == 2){
+			g2.setColor(Color.GREEN);
 		}
+		else if(weight == 3){
+			g2.setColor(Color.BLUE);
+		}
+		else if(weight == 4){
+			g2.setColor(Color.WHITE);
+		}
+		else if(weight == 5){
+			g2.setColor(Color.CYAN);
+		}
+		else if(weight == 6){
+			g2.setColor(Color.GRAY);
+		}
+		else if(weight == 7){
+			g2.setColor(Color.YELLOW);
+		}
+		else if(weight == 8){
+			g2.setColor(Color.ORANGE);
+		}
+		//else if(weight >= 1 && weight < 10){
+		//	Color color = new Color((int)(255 / 10) * weight , 255 - (int)(255 / 10) * weight, 125);
+		//	g2.setColor(color);
+		//}
 		else if(weight >= 10  && weight < 20){
 			Color color = new Color(255 - (int)(255 / 20) * weight, 125, (int)(255 / 20) * weight);
 			g2.setColor(color);	

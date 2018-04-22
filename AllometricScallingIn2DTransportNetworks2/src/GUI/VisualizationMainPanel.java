@@ -211,13 +211,22 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 		int maxJJ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size();
 		for (int jj = 0 ; jj < maxJJ; jj++){
 			Color color = new Color(221,234,240);
-			g2.setColor(color);
-			Ellipse2D oval = new Ellipse2D.Double(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord()
-					* xCo + 13 + BasicFrame.getPane().getSimTab().getXOffset(),
-					BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord()
-					* yCo + 13 + BasicFrame.getPane().getSimTab().getYOffset(), 10, 10);
-			ovalList.add(oval);
-			g2.fill(oval);
+			if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getLevel() == 0){
+				color = Color.RED;
+			}
+			if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getReverseMinimalTree().size() == 0
+					&& BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getMinimalNeighbourIndexesList().size() == 0 ){
+				//skip
+			}
+			else{
+				g2.setColor(color);
+				Ellipse2D oval = new Ellipse2D.Double(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getxCartCoord()
+						* xCo + 13 + BasicFrame.getPane().getSimTab().getXOffset(),
+						BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getyCartCoord()
+						* yCo + 13 + BasicFrame.getPane().getSimTab().getYOffset(), 10, 10);
+				ovalList.add(oval);
+				g2.fill(oval);
+			}
 		}
 	}
 	public void drawSubNetwork(){

@@ -140,7 +140,7 @@ public class RawDataTable extends JTable {
 		double prob = BasicFrame.getPane().getSimTab().getConsolePanel().getProbability();
 		DecimalFormat df = new DecimalFormat(".##");
 		tmpSpanTree = new MinimalSpanningTree(list, subHub, true);
-		model.addRow(new Object[]{dataBase.size()+1, Math.sqrt((tmpSpanTree.getSubNetwork().size()+1) / prob), tmpSpanTree.getSubNetwork().size()});
+		model.addRow(new Object[]{dataBase.size()+1, Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob), tmpSpanTree.getSubNetwork().size()});
 		dataBase.add(new HistoricalCalcs(dataBase.get(selectedIndex).getVerticleList(), tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMaximalMinimalTree()));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
 				df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 

@@ -68,8 +68,11 @@ public class ConsoleVisPanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().clear();
+				BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().clear();
 				BasicFrame.getPane().getCountTab().getChart().clearChart();
+				BasicFrame.getPane().getCountTab().getChart().clearSingleChart();
 				BasicFrame.getPane().getCountTab().getResults().getIndexPanel().getLabel().setText("AllometricScaleIndex");
+				BasicFrame.getPane().getCountTab().getResults().getSingleIndexPanel().getLabel().setText("AllometricScaleIndex");
 				stL.setText("<html> <b>Start L size: ");
 				jumpNumb.setText("<html> <b>Number of jumps:");
 				jumpSize.setText("<html> <b>Size of jump:");

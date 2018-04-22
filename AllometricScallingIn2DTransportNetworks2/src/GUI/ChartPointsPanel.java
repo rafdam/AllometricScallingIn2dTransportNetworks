@@ -43,7 +43,7 @@ public class ChartPointsPanel extends JPanel {
 						Object[] options = {"Re-calc allometric index for chosen network", "None"};
             			JFrame frame = new JFrame();
             			int decision = JOptionPane.showOptionDialog(frame, "What would you like to do?",
-            					"Select SubNetwork Type", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            					"Select your action", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 						if(decision == 0){
 							BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().clear();
 							BasicFrame.getPane().getCountTab().getChart().clearSingleChart();
@@ -53,11 +53,14 @@ public class ChartPointsPanel extends JPanel {
 							HubList list = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData()
 									.dataBase.get(table.getSelectedRow()).getVerticleList();
 							for(int ii = 0; ii < list.size(); ii++){
+								for (int jj = 0; jj < list.size(); jj++){
+									list.get(jj).setLevel(0);
+								}
 								if(list.get(ii).getMinimalNeighbourIndexesList().size() < 1){
 									//skip iteration
 								}
 								else{
-									list.get(ii).setLevel(0);
+									
 									tmpSpanTree = new MinimalSpanningTree(list, ii, true);
 									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
 											df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 
