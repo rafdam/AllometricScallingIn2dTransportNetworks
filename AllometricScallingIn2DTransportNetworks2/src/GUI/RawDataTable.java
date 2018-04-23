@@ -50,6 +50,7 @@ public class RawDataTable extends JTable {
 	public int recalcSubNetwork(int subHub){
 		MinimalSpanningTree tmpSpanTree;
 		HubList list = dataBase.get(selectedIndex).getVerticleList();
+		list.get(subHub).setLevel(-1);
 		if(list.get(subHub).getMinimalNeighbourIndexesList().size() < 1){
 			return 0;
 		}
@@ -123,14 +124,8 @@ public class RawDataTable extends JTable {
 	public int recalcSubSubNetwork(int subHub){
 		HubList list;
 		MinimalSpanningTree tmpSpanTree;
-		if(dataBase.get(selectedIndex).getSubNetwork().size() < 1){
-			list = dataBase.get(selectedIndex).getVerticleList();
-			//return 0;
-		}
-		else{
-			list = dataBase.get(selectedIndex).getSubNetwork();
-		}
 		list = dataBase.get(selectedIndex).getVerticleList();
+		list.get(subHub).setLevel(-1);
 		if(list.get(subHub).getMinimalNeighbourIndexesList().size() < 1){
 			return 0;
 		}

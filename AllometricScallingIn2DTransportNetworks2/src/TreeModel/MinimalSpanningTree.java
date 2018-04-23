@@ -20,7 +20,7 @@ private int lastHub;
 		boolean[] ifChecked = new boolean[list.size()];
 		adressesToCheck.add(hubNumber);
 		ifChecked[hubNumber] = true;
-		System.out.println(list.get(adressesToCheck.get(0)).getLevel());
+		list.get(adressesToCheck.get(0)).setLevel(-1);
 		long start = System.currentTimeMillis();
 		if(ifSubNetwork == false){
 			for (int ii = 0; ii < adressesToCheck.size(); ii++){
@@ -126,7 +126,7 @@ private int lastHub;
 				if(ifChecked[tmpAdress][lastHubs.get(jj)] == false){
 					ifChecked[tmpAdress][lastHubs.get(jj)] = true;
 					for(int ww = 0; ww < list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().size(); ww++){
-						weight += list.get(list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().get(ww)).getWeight();//list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().size();
+						weight += list.get(list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().get(ww)).getWeight();
 					}
 					weight = weight  + 1;
 					list.get(lastHubs.get(jj)).setWeight(weight);
@@ -163,7 +163,7 @@ private int lastHub;
 					if(lastHubs.get(jj) == lastHub){break;}
 					ifChecked[tmpAdress][lastHubs.get(jj)] = true;
 					for(int ww = 0; ww < list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().size(); ww++){
-						weight += list.get(list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().get(ww)).getWeight();//list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().size();
+						weight += list.get(list.get(lastHubs.get(jj)).getMinimalNeighbourIndexesList().get(ww)).getWeight();
 					}
 					weight = weight  + 1;
 					list.get(lastHubs.get(jj)).setWeight(weight);

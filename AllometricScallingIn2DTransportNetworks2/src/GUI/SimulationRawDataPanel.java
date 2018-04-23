@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -31,11 +32,12 @@ public class SimulationRawDataPanel extends JPanel {
 		previousData = new RawDataTable();
 		add(previousData);
 		JScrollPane pane = new JScrollPane(previousData);
-		add(pane, "height 80%, wrap");
+		add(pane, "height 50%, wrap");
 		JButton drawSpecifiedNetwork = new JButton("<html> <b>Draw Selected Network");
 		drawSubNetworkSpecs = new JCheckBox("<html> <b> Draw SubNetwork with Maximal Network Hubs");
-		//add(drawSpecifiedNetwork, "width 100%, wrap");
-		add(drawSubNetworkSpecs);
+		add(drawSubNetworkSpecs, "wrap");
+		ColorLegend colors = new ColorLegend();
+		add(colors, "height 40%, width 100%");
 		drawSubNetworkSpecs.setSelected(true);
 		
 		drawSpecifiedNetwork.setEnabled(false);

@@ -1,8 +1,10 @@
 package GUI;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -38,6 +40,8 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 	boolean foundContainingOval;
 	private ArrayList<NetworkHub> clickedHub;
 	public VisualizationMainPanel() {
+		//ColorLegend colors = new ColorLegend();
+		//add(colors);
 		ovalList= new ArrayList<Ellipse2D>();
 		clickedHub = new ArrayList<NetworkHub>();
 		zoomScalling = 1.0;
@@ -46,7 +50,6 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 		setBackground(color);
 		setBorder(new LineBorder(Color.WHITE, 4));
 		addMouseWheelListener(this);
-		
 		addMouseListener(new MouseAdapter(){
 			
             public void mousePressed(MouseEvent e){
@@ -189,7 +192,10 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 			//JOptionPane.showMessageDialog(BasicFrame.getPane(),"You have no sub Network specified");
 		}
 	}
-	
+	public void drawLegend(Graphics g){
+		ColorLegend colors = new ColorLegend();
+		this.add(colors);
+	}
 	public void drawMaximal(Graphics g, double xCo, double yCo){
 		int maxWW = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getMaximalNetworkEdgeList().size();
 		for (int ww = 0 ; ww < maxWW ; ww++){
@@ -211,11 +217,11 @@ public class VisualizationMainPanel extends JPanel implements MouseWheelListener
 		int maxJJ = BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().size();
 		for (int jj = 0 ; jj < maxJJ; jj++){
 			Color color = new Color(221,234,240);
-			if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getLevel() == 0){
+			if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getLevel() == -1){
 				color = Color.RED;
 			}
 			if(BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getReverseMinimalTree().size() == 0
-					&& BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getMinimalNeighbourIndexesList().size() == 0 ){
+					&& BasicFrame.getPane().getSimTab().getRawDataPanel().getPreviousData().getNetworkToDraw().getVerticleList().get(jj).getMinimalNeighbourIndexesList().size() == 0){
 				//skip
 			}
 			else{

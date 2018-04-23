@@ -57,24 +57,26 @@ public class ChartPointsPanel extends JPanel {
 									list.get(jj).setLevel(0);
 								}
 								if(list.get(ii).getMinimalNeighbourIndexesList().size() < 1){
-									//skip iteration
+									continue;
 								}
-								else{
-									
-									tmpSpanTree = new MinimalSpanningTree(list, ii, true);
-									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
-											df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 
-											tmpSpanTree.MinimalRequiredAmount(), 
-											df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
-											(String)BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().getValueAt(table.getSelectedRow(), 4),
-											tmpSpanTree.getMSTTime());
-									BasicFrame.getPane().getCountTab().getChart().addPointsToSingleChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)),
-											Math.log10(tmpSpanTree.MinimalRequiredAmount()));
-									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)));//logLVals.add(2 * Math.log10(ii));
-									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
-									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob));
-									BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addCVals(tmpSpanTree.MinimalRequiredAmount());
+								tmpSpanTree = new MinimalSpanningTree(list, ii, true);
+								if(tmpSpanTree.MinimalRequiredAmount() == 0){
+									continue;
 								}
+								
+								BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
+										df.format(2* Math.log10(Math.sqrt(tmpSpanTree.getSubNetwork().size() / prob))), 
+										tmpSpanTree.MinimalRequiredAmount(), 
+										df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 
+										(String)BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().getValueAt(table.getSelectedRow(), 4),
+										tmpSpanTree.getMSTTime());
+								BasicFrame.getPane().getCountTab().getChart().addPointsToSingleChart(2* Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)),
+										Math.log10(tmpSpanTree.MinimalRequiredAmount()));
+								BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLogLVals(2 * Math.log10(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob)));//logLVals.add(2 * Math.log10(ii));
+								BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
+								BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addLVals(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob));
+								BasicFrame.getPane().getCountTab().getResults().getSingleNetworkChartTable().getTable().addCVals(tmpSpanTree.MinimalRequiredAmount());
+							
 							}
 							double averageL = 0;
 							double averageC = 0;

@@ -72,6 +72,9 @@ private int level;
 		else if(weight == 8){
 			g2.setColor(Color.ORANGE);
 		}
+		else if(weight == 9){
+			g2.setColor(Color.PINK);
+		}
 		//else if(weight >= 1 && weight < 10){
 		//	Color color = new Color((int)(255 / 10) * weight , 255 - (int)(255 / 10) * weight, 125);
 		//	g2.setColor(color);
