@@ -92,7 +92,7 @@ private int level;
 			g2.setColor(color);
 		}
 		else if(weight >= 40 && weight < 50){
-			Color color = new Color(255 - (int)(255 / 50) * weight ,255 - (int)(255 / 50) * weight , (int)(255 / 50) * weight);
+			Color color = new Color(255 - (int)(255 / 50) * weight , 100, 255);
 			g2.setColor(color);
 		}
 		else if(weight >= 50 && weight < 60){
@@ -104,7 +104,7 @@ private int level;
 			g2.setColor(color);
 		}
 		else{
-			g2.setColor(Color.magenta);
+			g2.setColor(new Color(200, 255, 200));
 		}
 		
 		g2.drawLine((int)((hub1XCoord) * x + 18 + xOffset), (int)((hub1YCoord) * y + 18 + yOffset),

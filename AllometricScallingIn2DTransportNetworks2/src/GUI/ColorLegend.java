@@ -117,8 +117,8 @@ public class ColorLegend extends JPanel{
         g2d.setPaint(gp);
         g2d.fillRect(w1, 13*h_absolute, w, 14*h_absolute);
         
-        Color color_40 = new Color(255 - (int)(255 / 50) * 40 ,255 - (int)(255 / 50) * 40 , (int)(255 / 50) * 40);
-        Color color_49 = new Color(255 - (int)(255 / 50) * 49 ,255 - (int)(255 / 50) * 49 , (int)(255 / 50) * 49);
+        Color color_40 = new Color(255 - (int)(255 / 50) * 40 ,100 , 255);
+        Color color_49 = new Color(255 - (int)(255 / 50) * 49 ,100 , 255);
         gp = new GradientPaint(0, 0, color_40, w, 0, color_49);
         g2d.setPaint(gp);
         g2d.fillRect(w1, 14*h_absolute, w, 15*h_absolute);
@@ -135,7 +135,7 @@ public class ColorLegend extends JPanel{
         g2d.setPaint(gp);
         g2d.fillRect(w1, 16*h_absolute, w, 17*h_absolute);
         
-        Color color_else = Color.magenta;
+        Color color_else = new Color(200, 255, 200);
         g2d.setColor(color_else);
         g2d.fillRect(w1, 17*h_absolute, w, 18*h_absolute);
         
