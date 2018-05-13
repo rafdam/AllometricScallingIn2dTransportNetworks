@@ -37,13 +37,12 @@ public class IndexCalculus extends Thread{
 			TreeMap tmpTreeMap = null;
 			tmpTreeMap = new TreeMap(ii, probability, kNeighbours);
 			pieceOne = 0;//(int)tmpTreeMap.getNetwork().size()/2;
-			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), pieceOne, false);
+			MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(tmpTreeMap.getNetwork(), pieceOne, false, tmpTreeMap.getEdges());
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogLVals(2 * Math.log10(ii));//logLVals.add(2 * Math.log10(ii));
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLogCVals((Math.log10(tmpSpanTree.MinimalRequiredAmount())));
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addLVals(ii);
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addCVals(tmpSpanTree.MinimalRequiredAmount());
 			DecimalFormat df = new DecimalFormat(".##");
-			//BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable();
 			BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(ii, df.format(2* Math.log10(ii)), 
 					tmpSpanTree.MinimalRequiredAmount(), 
 					df.format(Math.log10(tmpSpanTree.MinimalRequiredAmount())), 

@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import TreeModel.EdgeList;
 import TreeModel.HistoricalCalcs;
 import TreeModel.HubList;
 import TreeModel.MinimalSpanningTree;
@@ -59,7 +60,7 @@ public class RawDataTable extends JTable {
 		}
 		double prob = BasicFrame.getPane().getSimTab().getConsolePanel().getProbability();
 		DecimalFormat df = new DecimalFormat(".##");
-		tmpSpanTree = new MinimalSpanningTree(list, subHub, true);
+		tmpSpanTree = new MinimalSpanningTree(list, subHub, true, new EdgeList());
 		model.addRow(new Object[]{dataBase.size() + 1, Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob), tmpSpanTree.getSubNetwork().size()});
 		dataBase.add(new HistoricalCalcs(list, tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList(), tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMaximalMinimalTree()));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
@@ -134,7 +135,7 @@ public class RawDataTable extends JTable {
 		}
 		double prob = BasicFrame.getPane().getSimTab().getConsolePanel().getProbability();
 		DecimalFormat df = new DecimalFormat(".##");
-		tmpSpanTree = new MinimalSpanningTree(list, subHub, true);
+		tmpSpanTree = new MinimalSpanningTree(list, subHub, true, new EdgeList());
 		model.addRow(new Object[]{dataBase.size()+1, Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob), tmpSpanTree.getSubNetwork().size()});
 		dataBase.add(new HistoricalCalcs(dataBase.get(selectedIndex).getVerticleList(), tmpSpanTree.getSubNetwork(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMaximalMinimalTree()));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow(Math.sqrt((tmpSpanTree.getSubNetwork().size()) / prob),
@@ -193,7 +194,7 @@ public class RawDataTable extends JTable {
 			list.get(ii).setLevel(0);
 		}
 		DecimalFormat df = new DecimalFormat(".##");
-		MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(list, startHub, false);
+		MinimalSpanningTree tmpSpanTree = new MinimalSpanningTree(list, startHub, false, new EdgeList());
 		model.addRow(new Object[]{dataBase.size() + 1, model.getValueAt(selectedIndex, 1), list.size()});
 		dataBase.add(new HistoricalCalcs(list, new HubList(), dataBase.get(selectedIndex).getMaximalNetworkEdgeList() , tmpSpanTree.getEdges(), dataBase.get(selectedIndex).getMinimalSpanningEdgeList()));
 		BasicFrame.getPane().getCountTab().getResults().getChartTable().getTable().addRow((int)model.getValueAt(selectedIndex, 1),

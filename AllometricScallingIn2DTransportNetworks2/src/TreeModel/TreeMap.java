@@ -1,6 +1,8 @@
 package TreeModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 public class TreeMap {
 private HubList map; // list of all verticles
 private EdgeList edges; // list containing all the edges with their weights
@@ -45,55 +47,67 @@ private String MNtime;
 				cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] = map.size();
 			}
 		}
+		
 		boolean[][] edgoid = new boolean[map.size()][map.size()];
+		double weight = 0;
 		for (int tt = 0; tt < ntri; tt++){
 			if(edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 					 [cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1] != true){
+				weight = Math.sqrt(Math.pow(points.get(triangles[tt].p1).x - points.get(triangles[tt].p2).x, 2) +
+						Math.pow(points.get(triangles[tt].p1).y - points.get(triangles[tt].p2).y, 2));
 				edges.add(new Edge(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1,
-						cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1, 1,
+						cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1, (int)weight,
 						(int)points.get(triangles[tt].p1).x, (int)points.get(triangles[tt].p2).x,
 						(int)points.get(triangles[tt].p1).y, (int)points.get(triangles[tt].p2).y,0));
-				map.get(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1);
-				map.get(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1);
+				map.get(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1);
+				map.get(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1);
 				edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 						 [cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1] = true;
 			}
-			else if(edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
+			if(edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 					 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] != true){
+				weight = Math.sqrt(Math.pow(points.get(triangles[tt].p1).x - points.get(triangles[tt].p3).x, 2) +
+						Math.pow(points.get(triangles[tt].p1).y - points.get(triangles[tt].p3).y, 2));
 				edges.add(new Edge(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1,
-						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, 1,
+						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, (int)weight,
 						(int)points.get(triangles[tt].p1).x, (int)points.get(triangles[tt].p3).x,
 						(int)points.get(triangles[tt].p1).y, (int)points.get(triangles[tt].p3).y,0));
-				map.get(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1);
-				map.get(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1);
+				map.get(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1);
+				map.get(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1);
 				edgoid[cuboid[(int)points.get(triangles[tt].p1).x][(int)points.get(triangles[tt].p1).y] - 1]
 						 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] = true;
 			}
-			else if(edgoid[cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1]
+			if(edgoid[cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1]
 					 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] != true){
+				weight = Math.sqrt(Math.pow(points.get(triangles[tt].p2).x - points.get(triangles[tt].p3).x, 2) +
+						Math.pow(points.get(triangles[tt].p2).y - points.get(triangles[tt].p3).y, 2));
 				edges.add(new Edge(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1,
-						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, 2,
-						(int)points.get(triangles[tt].p2).x, (int)points.get(triangles[tt].p2).x,
-						(int)points.get(triangles[tt].p2).y, (int)points.get(triangles[tt].p2).y,0));
-				map.get(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1);
-				map.get(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1).addToNeighbourIndexesList(
-						cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1);
-				
+						cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1, (int)weight,
+						(int)points.get(triangles[tt].p2).x, (int)points.get(triangles[tt].p3).x,
+						(int)points.get(triangles[tt].p2).y, (int)points.get(triangles[tt].p3).y,0));
+				map.get(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1);
+				map.get(cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1).
+				addToNeighbourIndexesList(cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1);
 				edgoid[cuboid[(int)points.get(triangles[tt].p2).x][(int)points.get(triangles[tt].p2).y] - 1]
 						 [cuboid[(int)points.get(triangles[tt].p3).x][(int)points.get(triangles[tt].p3).y] - 1] = true;
-			}	
+			}
 		}
+		
+		
 		MNtime = Long.toString(System.currentTimeMillis() - start);
+		Collections.sort(edges, Edge.EdgeWeight);
 	}	
 	
 	public String getMNTime(){
 		return MNtime;
 	}
+	
+	
 	
 	public HubList getNetwork(){
 		return map;

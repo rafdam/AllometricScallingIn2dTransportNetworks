@@ -12,6 +12,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import TreeModel.EdgeList;
 import TreeModel.HubList;
 import TreeModel.MinimalSpanningTree;
 import net.miginfocom.swing.MigLayout;
@@ -59,7 +60,7 @@ public class ChartPointsPanel extends JPanel {
 								if(list.get(ii).getMinimalNeighbourIndexesList().size() < 1){
 									continue;
 								}
-								tmpSpanTree = new MinimalSpanningTree(list, ii, true);
+								tmpSpanTree = new MinimalSpanningTree(list, ii, true, new EdgeList());
 								if(tmpSpanTree.MinimalRequiredAmount() == 0){
 									continue;
 								}

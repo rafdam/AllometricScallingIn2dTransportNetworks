@@ -3,6 +3,7 @@ package TreeModel;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.Comparator;
 
 public class Edge {
 private int startHubAdress; 
@@ -10,6 +11,7 @@ private int endHubAdress;
 public int hub1XCoord, hub1YCoord, hub2XCoord, hub2YCoord;
 private int weight; 
 private int level;
+private double dist;
 	public Edge(int hub1Adress, int hub2Adress, int weightLevel, int x1, int x2, int y1, int y2, int lvl) {
 		weight = weightLevel;
 		startHubAdress = hub1Adress;
@@ -19,10 +21,15 @@ private int level;
 		hub2XCoord = x2;
 		hub2YCoord = y2;
 		level = lvl;
+		dist = Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2));
 	}
 	
 	public int getStartHubAdress(){
 		return startHubAdress;
+	}
+	
+	public double getDist(){
+		return dist;
 	}
 	
 	public int getEndHubAdress(){
@@ -40,6 +47,28 @@ private int level;
 	public void setLevel(int lvl){
 		level = lvl;
 	}
+	
+	public static Comparator<Edge> EdgeWeight = new Comparator<Edge>() {
+		@Override
+		public int compare(Edge o1, Edge o2) {
+			int weight1 = o1.getWeight();
+			int weight2 = o2.getWeight();
+			return weight1 - weight2;
+	}};
+	
+	public static Comparator<Edge> EdgeDist = new Comparator<Edge>() {
+		@Override
+		public int compare(Edge o1, Edge o2) {
+			double dist1 = o1.getDist();
+			double dist2 = o2.getDist();
+			//return  (int)(dist1 - dist2);
+			if (dist1 < dist2)
+				  return -1;
+				else if (dist1 > dist2)
+				  return 1;
+				else
+				  return 0;
+		}};
 	
 	public void draw(Graphics g, double x, double y, int xOffset, int yOffset) { 
 		g.setColor(new Color(33, 33, 33));
